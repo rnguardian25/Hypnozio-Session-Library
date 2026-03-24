@@ -1,12 +1,14 @@
-/* ── LANGUAGES (add more here anytime) ── */
+/* ── LANGUAGES — code + label only, no flags ── */
 const LANGUAGES = [
-  { code: 'en', label: 'English' },
-  { code: 'de', label: 'German'  },
-  { code: 'fr', label: 'French'  },
-  { code: 'it', label: 'Italian' },
+  { code: 'en', label: 'English'  },
+  { code: 'de', label: 'German'   },
+  { code: 'fr', label: 'French'   },
+  { code: 'it', label: 'Italian'  },
+  /* Add more languages here:
+  { code: 'es', label: 'Spanish'  },
+  { code: 'pt', label: 'Portuguese' }, */
 ];
 
-/* ── CARD VISUALS ── */
 const ICONS = ['fa-fire-flame-curved','fa-apple-whole','fa-heart-pulse','fa-brain','fa-leaf'];
 const GRADS = ['g0','g1','g2','g3','g4'];
 
@@ -156,7 +158,7 @@ function buildLangOpts() {
     div.className = 'lang-opt' + (l.code === lang ? ' active' : '');
     div.innerHTML = `
       <span class="lang-opt-code">${l.code.toUpperCase()}</span>
-      <span>${l.label}</span>
+      <span class="lang-opt-name">${l.label}</span>
       <i class="fa-solid fa-check lang-opt-check"></i>`;
     div.onclick = (e) => { e.stopPropagation(); switchLang(l.code); };
     container.appendChild(div);
@@ -165,8 +167,8 @@ function buildLangOpts() {
 
 function toggleLangPopover(e) {
   e.stopPropagation();
-  const pop   = document.getElementById('lang-popover');
-  const btn   = document.getElementById('lang-globe-btn');
+  const pop    = document.getElementById('lang-popover');
+  const btn    = document.getElementById('lang-globe-btn');
   const isOpen = pop.classList.contains('open');
   closeLangPopover();
   if (!isOpen) {
@@ -181,7 +183,6 @@ function closeLangPopover() {
   document.getElementById('lang-globe-btn').classList.remove('open');
 }
 
-/* Close popover / info popups on outside click */
 document.addEventListener('click', (e) => {
   if (!document.getElementById('lang-wrap').contains(e.target)) closeLangPopover();
   document.querySelectorAll('.card-info-popup.open').forEach(p => p.classList.remove('open'));
@@ -191,8 +192,7 @@ function switchLang(code) {
   lang = code;
   selected.clear();
   closeLangPopover();
-  document.getElementById('lang-current-label').textContent =
-    LANGUAGES.find(l => l.code === code)?.label || code;
+  document.getElementById('lang-current-code').textContent = code.toUpperCase();
   render();
 }
 
@@ -202,11 +202,9 @@ function render() {
   const progs     = s.programs[lang] || s.programs['en'];
   const langLabel = LANGUAGES.find(l => l.code === lang)?.label || lang;
 
-  /* topbar */
-  document.getElementById('tb-icon').innerHTML  = `<i class="fa-solid ${s.icon}"></i>`;
+  document.getElementById('tb-icon').innerHTML    = `<i class="fa-solid ${s.icon}"></i>`;
   document.getElementById('tb-title').textContent = s.name;
 
-  /* cards */
   const grid = document.getElementById('grid');
   grid.innerHTML = '';
 
@@ -220,7 +218,6 @@ function render() {
     card.innerHTML = `
       <div class="card-inner">
         <div class="card-cb"><i class="fa-solid fa-check"></i></div>
-
         <div class="card-info-btn" onclick="toggleInfoPopup(event,this)">
           <i class="fa-solid fa-info"></i>
         </div>
@@ -230,7 +227,6 @@ function render() {
           <div class="card-info-popup-row"><i class="fa-solid fa-layer-group"></i> ${p.mod}</div>
           <div class="card-info-popup-row"><i class="fa-solid fa-globe"></i> ${langLabel}</div>
         </div>
-
         <div class="card-thumb">
           <div class="card-thumb-bg ${GRADS[i % 5]}"></div>
           <div class="card-thumb-shimmer"></div>
@@ -241,7 +237,6 @@ function render() {
             <span class="tag tag-lang">${lang.toUpperCase()}</span>
           </div>
         </div>
-
         <div class="card-body">
           <div class="card-title">${p.title}</div>
           <div class="card-dur"><i class="fa-regular fa-clock"></i> ${p.dur}</div>
@@ -263,7 +258,7 @@ function render() {
 /* ── INFO POPUP ── */
 function toggleInfoPopup(e, btn) {
   e.stopPropagation();
-  const popup  = btn.nextElementSibling;
+  const popup   = btn.nextElementSibling;
   const wasOpen = popup.classList.contains('open');
   document.querySelectorAll('.card-info-popup.open').forEach(p => p.classList.remove('open'));
   if (!wasOpen) popup.classList.add('open');
@@ -345,5 +340,4 @@ function toast(msg, type = 'info') {
   }, 3200);
 }
 
-/* ── INIT ── */
 render();

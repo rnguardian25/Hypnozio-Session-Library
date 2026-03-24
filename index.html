@@ -6,7 +6,7 @@
 <title>Serene Audio — Wellness Sessions</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
-<link href="style.css" rel="stylesheet"/>
+<link href="style.css" rel="stylesheet" />
 </head>
 <body>
 
@@ -17,7 +17,6 @@
   <div id="sb-tab" onclick="toggleSidebar()" title="Toggle sidebar">
     <i class="fa-solid fa-chevron-left" id="tab-icon"></i>
   </div>
-
   <div class="sb-inner">
     <div class="sb-header">
       <div class="logo-mark">
@@ -47,12 +46,11 @@
         <span class="sb-text">Deep Relaxation Session</span>
         <span class="sb-badge">5</span>
       </div>
-      <div class="sb-item" data-idx="2" data-tip="Focus & Energy" onclick="selectSess(2,this)">
+      <div class="sb-item" data-idx="2" data-tip="Focus &amp; Energy" onclick="selectSess(2,this)">
         <div class="sb-icon"><i class="fa-solid fa-seedling"></i></div>
         <span class="sb-text">Focus &amp; Energy Session</span>
         <span class="sb-badge">5</span>
       </div>
-
       <div class="sb-label" style="margin-top:12px">Library</div>
       <div class="sb-item" data-tip="All Programs" onclick="toast('Feature coming soon','info')">
         <div class="sb-icon"><i class="fa-solid fa-grip"></i></div>
@@ -76,7 +74,7 @@
 <!-- ── MAIN ── -->
 <div id="main">
 
-  <!-- ── TOPBAR: mobile btn + session icon + title + lang switcher ── -->
+  <!-- TOPBAR: hamburger · icon · title (always visible) · globe lang btn (always right) -->
   <header class="topbar">
     <button class="mobile-btn" onclick="openMobile()">
       <i class="fa-solid fa-bars-staggered"></i>
@@ -87,11 +85,11 @@
     </div>
     <div class="tb-title" id="tb-title">Weight Loss Session</div>
 
-    <!-- Globe language switcher -->
+    <!-- Globe lang btn — margin-left:auto on .lang-wrap pins it right always -->
     <div class="lang-wrap" id="lang-wrap">
       <button class="lang-globe-btn" id="lang-globe-btn" onclick="toggleLangPopover(event)">
         <i class="fa-solid fa-globe globe"></i>
-        <span id="lang-current-label">English</span>
+        <span class="lang-code" id="lang-current-code">EN</span>
         <i class="fa-solid fa-chevron-down lang-caret" id="lang-caret"></i>
       </button>
       <div class="lang-popover" id="lang-popover">
@@ -103,29 +101,36 @@
 
   <main class="content">
 
-    <!-- ── ACTION ROW: sel-pill + select/clear + download buttons ── -->
+    <!-- ACTION ROW
+         Desktop — left: [pill][Select All][Clear]  right: [Download Selected][Download All]
+         Mobile  — row 1: [pill][Select All][Clear]
+                   row 2: [Download Selected][Download All] right-aligned
+    -->
     <div class="act-row">
-      <!-- Selection count pill sits first, inline with buttons -->
-      <div class="sel-pill" id="sel-pill">
-        <i class="fa-solid fa-square-check"></i>
-        <span id="sel-cnt">0</span> selected
+      <div class="act-left">
+        <div class="sel-pill" id="sel-pill">
+          <i class="fa-solid fa-circle-check"></i>
+          <span id="sel-cnt">0</span> selected
+        </div>
+        <button class="btn btn-outline" id="sel-all-btn" onclick="toggleAll()">
+          <i class="fa-regular fa-square-check"></i> Select All
+        </button>
+        <button class="btn btn-outline" id="clr-btn" style="display:none" onclick="clearSel()">
+          <i class="fa-solid fa-xmark"></i> Clear
+        </button>
       </div>
 
-      <button class="btn btn-outline" id="sel-all-btn" onclick="toggleAll()">
-        <i class="fa-regular fa-square-check"></i> Select All
-      </button>
-      <button class="btn btn-outline" id="clr-btn" style="display:none" onclick="clearSel()">
-        <i class="fa-solid fa-xmark"></i> Clear
-      </button>
-      <button class="btn btn-sage" id="dl-sel-btn" onclick="downloadSel()" disabled>
-        <i class="fa-solid fa-download"></i> Download Selected
-      </button>
-      <button class="btn btn-dark" onclick="downloadAll()">
-        <i class="fa-solid fa-folder-arrow-down"></i> Download All
-      </button>
+      <div class="act-right">
+        <button class="btn btn-sage" id="dl-sel-btn" onclick="downloadSel()" disabled>
+          <i class="fa-solid fa-download"></i> Download Selected
+        </button>
+        <button class="btn btn-dark" onclick="downloadAll()">
+          <i class="fa-solid fa-folder-arrow-down"></i> Download All
+        </button>
+      </div>
     </div>
 
-    <!-- ── CARDS ── -->
+    <!-- CARDS -->
     <div class="cards-grid" id="grid"></div>
 
   </main>
