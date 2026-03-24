@@ -6,7 +6,7 @@
 <title>Serene Audio — Wellness Sessions</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
-<link href="style.css" rel="stylesheet" />
+<link href="style.css" rel="stylesheet"/>
 </head>
 <body>
 
@@ -14,7 +14,6 @@
 
 <!-- ── SIDEBAR ── -->
 <aside id="sidebar">
-  <!-- always-visible tab on right edge -->
   <div id="sb-tab" onclick="toggleSidebar()" title="Toggle sidebar">
     <i class="fa-solid fa-chevron-left" id="tab-icon"></i>
   </div>
@@ -71,65 +70,59 @@
         <span class="sb-text">Settings</span>
       </div>
     </div>
-  </div><!-- /sb-inner -->
+  </div>
 </aside>
 
 <!-- ── MAIN ── -->
 <div id="main">
 
-  <!-- Slim topbar: only mobile hamburger + selection count -->
+  <!-- ── TOPBAR: mobile btn + session icon + title + lang switcher ── -->
   <header class="topbar">
-    <button class="mobile-btn" onclick="openMobile()"><i class="fa-solid fa-bars-staggered"></i></button>
-    <div class="topbar-spacer"></div>
-    <div class="sel-pill" id="sel-pill">
-      <i class="fa-solid fa-square-check"></i>
-      <span id="sel-cnt">0</span> selected
+    <button class="mobile-btn" onclick="openMobile()">
+      <i class="fa-solid fa-bars-staggered"></i>
+    </button>
+
+    <div class="tb-sess-icon" id="tb-icon">
+      <i class="fa-solid fa-fire-flame-curved"></i>
+    </div>
+    <div class="tb-title" id="tb-title">Weight Loss Session</div>
+
+    <!-- Globe language switcher -->
+    <div class="lang-wrap" id="lang-wrap">
+      <button class="lang-globe-btn" id="lang-globe-btn" onclick="toggleLangPopover(event)">
+        <i class="fa-solid fa-globe globe"></i>
+        <span id="lang-current-label">English</span>
+        <i class="fa-solid fa-chevron-down lang-caret" id="lang-caret"></i>
+      </button>
+      <div class="lang-popover" id="lang-popover">
+        <span class="lang-popover-label">Select Language</span>
+        <div id="lang-opts-container"></div>
+      </div>
     </div>
   </header>
 
   <main class="content">
 
-    <!-- ── HERO (title + lang switcher, no duplication) ── -->
-    <div class="hero">
-      <div class="hero-icon" id="h-icon"><i class="fa-solid fa-fire-flame-curved"></i></div>
-      <div class="hero-info">
-        <div class="hero-title" id="h-title">Weight Loss Session</div>
-        <div class="hero-sub" id="h-sub">5 audio programs &nbsp;·&nbsp; <strong>English</strong></div>
-      </div>
-
-      <!-- Language switcher — globe popover -->
-      <div class="lang-wrap" id="lang-wrap">
-        <button class="lang-globe-btn" onclick="toggleLangPopover(event)" id="lang-globe-btn">
-          <i class="fa-solid fa-globe globe"></i>
-          <span class="lang-current-label" id="lang-current-label">English</span>
-          <i class="fa-solid fa-chevron-down lang-caret" id="lang-caret"></i>
-        </button>
-        <div class="lang-popover" id="lang-popover">
-          <span class="lang-popover-label">Select Language</span>
-          <!-- options rendered by JS from LANGUAGES array -->
-          <div id="lang-opts-container"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── ACTION ROW ── -->
+    <!-- ── ACTION ROW: sel-pill + select/clear + download buttons ── -->
     <div class="act-row">
-      <div class="act-left">
-        <button class="btn btn-outline" id="sel-all-btn" onclick="toggleAll()">
-          <i class="fa-regular fa-square-check"></i> Select All
-        </button>
-        <button class="btn btn-outline" id="clr-btn" style="display:none" onclick="clearSel()">
-          <i class="fa-solid fa-xmark"></i> Clear
-        </button>
+      <!-- Selection count pill sits first, inline with buttons -->
+      <div class="sel-pill" id="sel-pill">
+        <i class="fa-solid fa-square-check"></i>
+        <span id="sel-cnt">0</span> selected
       </div>
-      <div class="act-right">
-        <button class="btn btn-sage" id="dl-sel-btn" onclick="downloadSel()" disabled>
-          <i class="fa-solid fa-download"></i> Download Selected
-        </button>
-        <button class="btn btn-dark" onclick="downloadAll()">
-          <i class="fa-solid fa-folder-arrow-down"></i> Download All
-        </button>
-      </div>
+
+      <button class="btn btn-outline" id="sel-all-btn" onclick="toggleAll()">
+        <i class="fa-regular fa-square-check"></i> Select All
+      </button>
+      <button class="btn btn-outline" id="clr-btn" style="display:none" onclick="clearSel()">
+        <i class="fa-solid fa-xmark"></i> Clear
+      </button>
+      <button class="btn btn-sage" id="dl-sel-btn" onclick="downloadSel()" disabled>
+        <i class="fa-solid fa-download"></i> Download Selected
+      </button>
+      <button class="btn btn-dark" onclick="downloadAll()">
+        <i class="fa-solid fa-folder-arrow-down"></i> Download All
+      </button>
     </div>
 
     <!-- ── CARDS ── -->

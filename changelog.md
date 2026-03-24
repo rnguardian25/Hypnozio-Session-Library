@@ -23,17 +23,18 @@ A Google Drive-style audio session download website for wellness programs. Users
 | 5 programs per session | ✅ Done |
 | 4 languages per session (EN, DE, FR, IT) | ✅ Done |
 | English as default language | ✅ Done |
-| Globe icon → language popover panel | ✅ Done |
+| Topbar: session icon + session title | ✅ Done |
+| Topbar: globe icon → language popover panel | ✅ Done |
 | Easy to add more languages | ✅ Done |
+| Hero section | ❌ Removed (reverted) |
 | Card format (thumbnail, title, download btn) | ✅ Done |
 | Card title truncated to 2 lines | ✅ Done |
 | Info (ⓘ) button popup with full card details | ✅ Done |
+| Selection count pill in action row (beside buttons) | ✅ Done |
 | Select individual programs | ✅ Done |
 | Select All / Deselect All | ✅ Done |
 | Download Selected (multi-download) | ✅ Done |
 | Download All (per session + language) | ✅ Done |
-| Hero section (session title + lang switcher) | ✅ Done |
-| Redundant headers/buttons removed | ✅ Done |
 | Responsive (mobile, tablet, desktop) | ✅ Done |
 | Mobile sidebar drawer + overlay | ✅ Done |
 | Toast notifications | ✅ Done |
@@ -42,6 +43,60 @@ A Google Drive-style audio session download website for wellness programs. Users
 | Logo image | ⏳ Pending — replace placeholder SVG |
 | More languages | ⏳ Planned |
 | GitHub Pages deployment | ✅ Instructions provided |
+
+---
+
+## Changelog
+
+### v1.4 — `revert-header-section` *(current)*
+**Commit message:** `revert: restore topbar header, remove hero, move lang switcher and sel-pill to action row`
+
+Changes made:
+- ✅ **Topbar restored** — session icon + session title + language switcher are back in the sticky header
+- ✅ **Hero section removed** — no more dark banner block above the cards
+- ✅ **Language switcher moved to topbar** — globe button with popover now lives in the top-right of the header bar, styled to match the light topbar (white bg, sage border, muted text)
+- ✅ **Selection pill moved to action row** — `sel-pill` now sits inline as the first item in the action row, beside Select All, Clear, Download Selected, and Download All buttons
+- ✅ **Changelog updated**
+
+---
+
+### v1.3 — `fix/ui-improvements`
+**Commit message:** `fix: sidebar tab, English default, globe lang switcher, remove redundant header, card title truncation`
+
+Changes made:
+- ✅ Sidebar toggle tab added to right edge (always visible, even when minimized)
+- ✅ English (EN) added as default language for all sessions
+- ✅ Language switcher redesigned as globe icon → popover panel (future-proof for more languages)
+- ✅ First topbar (icon + title + old lang bar) removed to reduce redundancy
+- ✅ Hero section introduced; language switcher and session title moved there
+- ✅ "Download All" removed from hero, kept only in action row
+- ✅ Card titles truncated to 2 lines with `ⓘ` info button popup showing full details
+
+---
+
+### v1.2 — `redesign/wellness-theme`
+**Commit message:** `feat: Serene Audio v1.0 — wellness audio site with multilingual session downloads`
+
+Changes made:
+- ✅ Full visual redesign — calm wellness aesthetic (sage greens, misty teals)
+- ✅ Fonts changed to Cormorant Garamond (display) + Jost (UI)
+- ✅ Card thumbnails use 5 unique CSS gradient combinations with shimmer effects
+- ✅ Sidebar uses deep forest green (#1a2a20) with organic glow orbs
+- ✅ Noise texture overlay added to background for depth
+- ✅ Leaf SVG logo mark in sidebar header
+
+---
+
+### v1.1 — `feat/initial-build`
+**Commit message:** `feat: initial release — Serene Audio wellness session site`
+
+Changes made:
+- ✅ Initial website built — dark theme, 3 sessions, DE/FR/IT languages
+- ✅ Card grid layout with thumbnails, titles, download buttons
+- ✅ Collapsible sidebar with logo, session list, tooltips on minimized state
+- ✅ Single and multi-select download system
+- ✅ Toast notifications
+- ✅ Responsive for mobile/tablet/desktop
 
 ---
 
@@ -88,19 +143,19 @@ A Google Drive-style audio session download website for wellness programs. Users
 | Token | Value | Usage |
 |---|---|---|
 | `--bg` | `#eef2ee` | Page background |
-| `--sidebar-bg` | `#1a2a20` | Sidebar + hero + dark buttons |
+| `--sidebar-bg` | `#1a2a20` | Sidebar + dark buttons |
 | `--sidebar-bg2` | `#1f3025` | Sidebar hover states |
-| `--surface` | `#ffffff` | Cards, popovers |
-| `--surface2` | `#f4f8f4` | Subtle backgrounds |
+| `--surface` | `#ffffff` | Cards, popovers, topbar |
+| `--surface2` | `#f4f8f4` | Subtle hover backgrounds |
 | `--sage` | `#5f9070` | Primary accent |
 | `--sage-light` | `#82b494` | Lighter accent |
 | `--sage-pale` | `#d4e8da` | Pale accent backgrounds |
 | `--text-dark` | `#182418` | Headings |
 | `--text` | `#2a3c2e` | Body text |
-| `--muted` | `#6e9078` | Secondary text |
+| `--muted` | `#6e9078` | Secondary / placeholder text |
 
 ### Typography
-- **Display / Headings:** `Cormorant Garamond` (serif, italic for hero titles)
+- **Display / Headings:** `Cormorant Garamond` (serif, italic for titles)
 - **UI / Body:** `Jost` (sans-serif, weights 300–600)
 
 ### Card Gradients (5 rotating)
@@ -116,29 +171,24 @@ A Google Drive-style audio session download website for wellness programs. Users
 
 ## How to Add a New Language
 
-1. Open `index.html` and find the `LANGUAGES` array near the top of the `<script>`:
+1. Find the `LANGUAGES` array near the top of the `<script>` in `index.html`:
 ```js
 const LANGUAGES = [
   { code: 'en', label: 'English' },
   { code: 'de', label: 'German'  },
   { code: 'fr', label: 'French'  },
   { code: 'it', label: 'Italian' },
-  // Add new language here:
+  // Add here:
   // { code: 'es', label: 'Spanish' },
 ];
 ```
 
-2. Then for each session inside the `DATA` array, add a matching key under `programs`:
+2. Add a matching key under `programs` for each session in the `DATA` array:
 ```js
-programs: {
-  en: [ ... ],
-  de: [ ... ],
-  // add:
-  es: [
-    { title: 'Introducción a la pérdida de peso', dur: '22 min', mod: 'Módulo 1', url: '#' },
-    ...
-  ]
-}
+es: [
+  { title: 'Introducción a la pérdida de peso', dur: '22 min', mod: 'Módulo 1', url: '#' },
+  // ... 5 programs total
+]
 ```
 
 ---
@@ -155,31 +205,28 @@ https://drive.google.com/uc?export=download&id=YOUR_FILE_ID
 **How to get the File ID:**
 1. Upload your audio file to Google Drive
 2. Right-click → **Get link** → set to **Anyone with the link**
-3. The link looks like: `https://drive.google.com/file/d/FILE_ID_HERE/view`
-4. Copy the `FILE_ID_HERE` part and paste into the URL above
+3. Copy the ID from: `https://drive.google.com/file/d/FILE_ID_HERE/view`
 
 ---
 
 ## How to Add a New Session
 
-1. Add a new entry to the `DATA` array in `index.html`:
+1. Add entry to the `DATA` array:
 ```js
 {
   name: 'Your Session Name',
-  icon: 'fa-YOUR-ICON',   // any Font Awesome solid icon name
+  icon: 'fa-YOUR-ICON',
   programs: {
     en: [
       { title: '...', dur: '20 min', mod: 'Module 1', url: '#' },
-      // 5 programs recommended
+      // 5 programs
     ],
-    de: [ ... ],
-    fr: [ ... ],
-    it: [ ... ],
+    de: [ ... ], fr: [ ... ], it: [ ... ],
   }
 }
 ```
 
-2. Add a matching sidebar item in the HTML (inside `<nav class="sb-nav">`):
+2. Add sidebar item in HTML (`data-idx` must match position in `DATA` array, 0-based):
 ```html
 <div class="sb-item" data-idx="3" data-tip="Your Session" onclick="selectSess(3,this)">
   <div class="sb-icon"><i class="fa-solid fa-YOUR-ICON"></i></div>
@@ -187,19 +234,17 @@ https://drive.google.com/uc?export=download&id=YOUR_FILE_ID
   <span class="sb-badge">5</span>
 </div>
 ```
-> Make sure `data-idx` matches the position in the `DATA` array (0-based).
 
 ---
 
 ## How to Replace the Logo
 
-Find the `<div class="logo-mark">` in the sidebar HTML and replace the SVG with an `<img>` tag:
 ```html
 <div class="logo-mark">
   <img src="your-logo.png" style="width:24px;height:24px;object-fit:contain;" />
 </div>
 ```
-And update the brand name in `.logo-name`:
+Update the brand name:
 ```html
 <span class="logo-name">Your Brand Name</span>
 ```
@@ -208,7 +253,7 @@ And update the brand name in `.logo-name`:
 
 ## How to Replace Card Thumbnails
 
-Each card thumbnail is currently a CSS gradient. To use a real image, find the card render loop in `render()` and replace:
+In the `render()` function, replace:
 ```js
 <div class="card-thumb-bg ${GRADS[i % 5]}"></div>
 ```
@@ -216,48 +261,32 @@ with:
 ```js
 <div class="card-thumb-bg" style="background-image:url('${p.image}');background-size:cover;background-position:center"></div>
 ```
-Then add an `image` field to each program object in `DATA`:
+Then add an `image` field to each program in `DATA`:
 ```js
-{ title: 'Weight Loss Introduction', dur: '22 min', mod: 'Module 1', url: '#', image: 'images/wl-01.jpg' }
+{ title: '...', dur: '22 min', mod: 'Module 1', url: '#', image: 'images/wl-01.jpg' }
 ```
 
 ---
 
 ## GitHub Deployment
 
-**Repo:** Replace with your actual repo URL
-**Branch:** `main`
-**Pages source:** `/ (root)` → `index.html`
+**Branch:** `main` · **Pages source:** `/ (root)` → `index.html`
 **Live URL:** `https://YOUR_USERNAME.github.io/YOUR_REPO_NAME`
 
-### Deploy / Update commands
 ```bash
 # First time
 git init
-git add index.html
-git commit -m "Initial commit"
+git add index.html CHANGELOG.md
+git commit -m "feat: Serene Audio v1.0 — wellness audio site with multilingual session downloads"
 git branch -M main
 git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO.git
 git push -u origin main
 
-# Every update after
-git add index.html
-git commit -m "describe your change here"
+# Each update
+git add index.html CHANGELOG.md
+git commit -m "your message here"
 git push
 ```
-
----
-
-## Conversation History Summary
-
-| # | What was built / changed |
-|---|---|
-| 1 | Initial website built — dark theme, 3 sessions, DE/FR/IT languages, card grid, sidebar, download system |
-| 2 | Full redesign — calm wellness theme (sage greens), Cormorant Garamond + Jost fonts, hero section, gradient card thumbs |
-| 3 | Answers confirmed: placeholder logo, placeholder images, placeholder Drive links, calm & wellness color scheme |
-| 4 | Bug fixes & improvements: sidebar toggle tab on right edge, English added as default language, globe icon language popover, removed redundant topbar header, removed Download All from hero, card titles truncated to 2 lines with ⓘ info popup |
-| 5 | GitHub Pages deployment instructions provided |
-| 6 | This CHANGELOG.md created |
 
 ---
 
@@ -266,7 +295,7 @@ git push
 - [ ] Replace all `url: '#'` with real Google Drive download links
 - [ ] Replace placeholder card thumbnails with real images
 - [ ] Replace SVG placeholder logo with real brand logo
-- [ ] Rename sessions 2 & 3 from placeholder names to real names (currently "Deep Relaxation" and "Focus & Energy" — update if different)
-- [ ] Add more languages as needed (see instructions above)
-- [ ] Add more sessions as needed (see instructions above)
+- [ ] Rename sessions 2 & 3 if needed (currently "Deep Relaxation" and "Focus & Energy")
+- [ ] Add more languages as needed
+- [ ] Add more sessions as needed
 - [ ] Push to GitHub and verify GitHub Pages deployment
