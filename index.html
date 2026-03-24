@@ -6,7 +6,7 @@
 <title>Serene Audio — Wellness Sessions</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
-<link href="style.css" rel="stylesheet" />
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -74,18 +74,15 @@
 <!-- ── MAIN ── -->
 <div id="main">
 
-  <!-- TOPBAR: hamburger · icon · title (always visible) · globe lang btn (always right) -->
   <header class="topbar">
     <button class="mobile-btn" onclick="openMobile()">
       <i class="fa-solid fa-bars-staggered"></i>
     </button>
-
     <div class="tb-sess-icon" id="tb-icon">
       <i class="fa-solid fa-fire-flame-curved"></i>
     </div>
     <div class="tb-title" id="tb-title">Weight Loss Session</div>
 
-    <!-- Globe lang btn — margin-left:auto on .lang-wrap pins it right always -->
     <div class="lang-wrap" id="lang-wrap">
       <button class="lang-globe-btn" id="lang-globe-btn" onclick="toggleLangPopover(event)">
         <i class="fa-solid fa-globe globe"></i>
@@ -101,11 +98,6 @@
 
   <main class="content">
 
-    <!-- ACTION ROW
-         Desktop — left: [pill][Select All][Clear]  right: [Download Selected][Download All]
-         Mobile  — row 1: [pill][Select All][Clear]
-                   row 2: [Download Selected][Download All] right-aligned
-    -->
     <div class="act-row">
       <div class="act-left">
         <div class="sel-pill" id="sel-pill">
@@ -119,7 +111,6 @@
           <i class="fa-solid fa-xmark"></i> Clear
         </button>
       </div>
-
       <div class="act-right">
         <button class="btn btn-sage" id="dl-sel-btn" onclick="downloadSel()" disabled>
           <i class="fa-solid fa-download"></i> Download Selected
@@ -130,7 +121,6 @@
       </div>
     </div>
 
-    <!-- CARDS -->
     <div class="cards-grid" id="grid"></div>
 
   </main>

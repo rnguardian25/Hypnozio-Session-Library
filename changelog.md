@@ -23,24 +23,25 @@ A Google Drive-style audio session download website for wellness programs. Users
 | 5 programs per session | ✅ Done |
 | 4 languages per session (EN, DE, FR, IT) | ✅ Done |
 | English as default language | ✅ Done |
-| Topbar: session icon + title (always visible, truncates on small screens) | ✅ Done |
-| Topbar: globe icon → lang code → popover (no flags, no initials) | ✅ Done |
-| Globe lang btn always sticky right in topbar | ✅ Done |
-| Hero section | ❌ Removed |
-| Card format (thumbnail, title, download btn) | ✅ Done |
-| Card title truncated to 2 lines + ⓘ info popup | ✅ Done |
-| Action row: left group (pill + Select All + Clear) · right group (Download Selected + Download All) | ✅ Done |
-| Mobile action row: Row 1 = selection buttons · Row 2 = download buttons (right-aligned) | ✅ Done |
-| Button text labels always visible (never hidden on mobile) | ✅ Done |
-| On ≤520px: Download buttons each fill half the row | ✅ Done |
-| Select All / Deselect All | ✅ Done |
+| Topbar: session icon + title (always visible) | ✅ Done |
+| Topbar: globe → lang code → popover | ✅ Done |
+| Card thumbnail: duration tag only (no mod, no lang tags) | ✅ Done |
+| Card body: title + full-width Download button | ✅ Done |
+| Card title: 17px, 2-line clamp, high contrast | ✅ Done |
+| Card hover: soft sage wash, no lift (Google Drive style) | ✅ Done |
+| Card selected: full-card sage green wash, no border ring | ✅ Done |
+| Checkbox + info btn: fade in on hover / stay on selected | ✅ Done |
+| Info popup: title + duration + file size + language | ✅ Done |
+| File size field in data (`size: '— MB'` placeholder) | ✅ Done |
+| Select All / Deselect All / Clear | ✅ Done |
 | Download Selected + Download All | ✅ Done |
+| Mobile: 2-row action bar, title always visible | ✅ Done |
 | Responsive (mobile, tablet, desktop) | ✅ Done |
-| Mobile sidebar drawer + overlay | ✅ Done |
 | Toast notifications | ✅ Done |
-| Google Drive links (placeholder `#`) | ⏳ Pending — replace with real links |
-| Card thumbnail images | ⏳ Pending — replace with real images |
-| Logo image | ⏳ Pending — replace placeholder SVG |
+| Google Drive links (placeholder `#`) | ⏳ Pending |
+| Real file sizes | ⏳ Pending — replace `— MB` with actual sizes |
+| Card thumbnail images | ⏳ Pending |
+| Logo image | ⏳ Pending |
 | More languages | ⏳ Planned |
 | GitHub Pages deployment | ✅ Instructions provided |
 
@@ -48,31 +49,36 @@ A Google Drive-style audio session download website for wellness programs. Users
 
 ## Changelog
 
-### v1.6 — `fix/mobile-header-and-button-layout` *(current)*
+### v1.7 — `feat/card-redesign-ux` *(current)*
+**Commit message:** `feat: card redesign — clean tags, sage selected wash, accessible layout for all ages`
+
+Changes:
+- ✅ Module number tag removed from thumbnail
+- ✅ Language tag removed from thumbnail
+- ✅ Duration shown as pill tag on thumbnail bottom-left (clock + time)
+- ✅ Info popup: module removed → file size added (`— MB` placeholder)
+- ✅ Selected state: full-card sage wash, no border ring (Google Drive style)
+- ✅ Hover: very subtle sage tint, no lift/transform
+- ✅ Checkbox + info btn fade in on hover, always visible when selected
+- ✅ Title 17px, high contrast, easy to read for all ages
+- ✅ Download button full-width, tall, easy to tap (44px+ touch target)
+- ✅ `size` field added to all DATA program objects
+
+---
+
+### v1.6 — `fix/mobile-header-and-button-layout`
 **Commit message:** `fix: revert globe lang btn, show title on mobile, fix mobile button layout`
 
-Changes made:
-- ✅ **#1 — Language button reverted to globe icon** — removed flag emoji entirely; button now shows globe icon + lang code (e.g. `🌐 EN`) + caret
-- ✅ **#2 — Removed initials/label from lang button left side** — button contains only: globe icon · code · caret. No redundant text alongside
-- ✅ **#3 — Session title always shown on mobile** — removed `display: none` on `.tb-title` at mobile breakpoints; title truncates gracefully via `text-overflow: ellipsis` at all sizes, including 14px on ≤520px
-- ✅ **#4 — Button text labels never hidden** — removed `.btn-label-full` hide rules entirely; all button text is always visible regardless of screen size
-- ✅ **#5 — Mobile button layout fixed (2 rows):**
-  - Row 1: `[● N selected] [Select All / Deselect All] [Clear]`
-  - Row 2: `[Download Selected] [Download All]` — right-aligned
-  - On ≤520px: Download buttons each expand to fill half the row side-by-side
-- ✅ **#6 — Changelog updated**
-- ✅ Lang popover: code + name only (no flags anywhere)
+Changes:
+- ✅ Globe icon reverted, flags removed everywhere
+- ✅ Session title always visible on mobile (truncates, never hides)
+- ✅ Button text labels never hidden on mobile
+- ✅ Mobile: Row 1 = selection buttons, Row 2 = download buttons (right-aligned)
 
 ---
 
 ### v1.5 — `feat/flag-lang-and-ux-buttons`
 **Commit message:** `feat: country flag language switcher, sticky lang btn, right-aligned download buttons`
-
-Changes made:
-- ✅ Country flag emoji added to language button and popover
-- ✅ Language button made sticky right at all screen sizes
-- ✅ Action row split: selection controls left, download buttons right
-- ✅ On very small screens, button labels were hidden (reverted in v1.6)
 
 ---
 
@@ -127,61 +133,55 @@ Changes made:
 
 ---
 
-## Design System
+## Data Field Reference
 
-### Color Palette
-| Token | Value | Usage |
+Each program object now has 4 fields:
+```js
+{ title: 'Program Name', dur: '22 min', size: '— MB', url: '#' }
+```
+
+| Field | Description | Status |
 |---|---|---|
-| `--bg` | `#eef2ee` | Page background |
-| `--sidebar-bg` | `#1a2a20` | Sidebar + dark buttons |
-| `--sidebar-bg2` | `#1f3025` | Sidebar hover |
-| `--surface` | `#ffffff` | Cards, popovers, topbar |
-| `--surface2` | `#f4f8f4` | Subtle hover |
-| `--sage` | `#5f9070` | Primary accent |
-| `--sage-light` | `#82b494` | Lighter accent |
-| `--sage-pale` | `#d4e8da` | Pale accent backgrounds |
-| `--text-dark` | `#182418` | Headings |
-| `--muted` | `#6e9078` | Secondary text |
+| `title` | Program display name | ✅ Filled |
+| `dur` | Duration string e.g. `'22 min'` | ✅ Filled |
+| `size` | File size e.g. `'48 MB'` | ⏳ Replace `'— MB'` when known |
+| `url` | Google Drive download link | ⏳ Replace `'#'` |
 
-### Typography
-- **Display:** `Cormorant Garamond` (serif)
-- **UI / Body:** `Jost` (sans-serif, weights 300–600)
+---
+
+## How to Add Google Drive Links + File Sizes
+
+Replace `url: '#'` and `size: '— MB'` for each program:
+```js
+{ title: '...', dur: '22 min', size: '48 MB', url: 'https://drive.google.com/uc?export=download&id=FILE_ID' }
+```
 
 ---
 
 ## How to Add a New Language
 
-1. Add to `LANGUAGES` array in `index.html`:
 ```js
+// In LANGUAGES array:
 { code: 'es', label: 'Spanish' },
-```
-2. Add matching programs under each session in `DATA`:
-```js
+
+// In each session's programs object:
 es: [
-  { title: '...', dur: '22 min', mod: 'Módulo 1', url: '#' },
+  { title: '...', dur: '22 min', size: '— MB', url: '#' },
   // 5 total
 ]
 ```
 
 ---
 
-## How to Add Google Drive Links
-
-Replace every `url: '#'` with:
-```
-https://drive.google.com/uc?export=download&id=YOUR_FILE_ID
-```
-
----
-
 ## How to Add a New Session
 
-1. Add to `DATA`:
 ```js
+// In DATA array:
 { name: 'Your Session', icon: 'fa-YOUR-ICON', programs: { en:[...], de:[...], fr:[...], it:[...] } }
 ```
-2. Add sidebar item (0-based `data-idx`):
+
 ```html
+<!-- In sidebar HTML (data-idx = 0-based position in DATA): -->
 <div class="sb-item" data-idx="3" data-tip="Your Session" onclick="selectSess(3,this)">
   <div class="sb-icon"><i class="fa-solid fa-YOUR-ICON"></i></div>
   <span class="sb-text">Your Session Name</span>
@@ -195,7 +195,7 @@ https://drive.google.com/uc?export=download&id=YOUR_FILE_ID
 
 ```bash
 git add index.html CHANGELOG.md
-git commit -m "fix: revert globe lang btn, show title on mobile, fix mobile button layout"
+git commit -m "feat: card redesign — clean tags, sage selected wash, accessible layout for all ages"
 git push
 ```
 
@@ -206,9 +206,9 @@ git push
 ## Pending / Next Steps
 
 - [ ] Replace all `url: '#'` with real Google Drive download links
+- [ ] Replace all `size: '— MB'` with actual file sizes
 - [ ] Replace placeholder card thumbnails with real images
 - [ ] Replace SVG placeholder logo with real brand logo
 - [ ] Rename sessions 2 & 3 if needed
 - [ ] Add more languages as needed
-- [ ] Add more sessions as needed
 - [ ] Verify GitHub Pages deployment
