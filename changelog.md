@@ -1,15 +1,36 @@
 # Serene Audio — Project Changelog & Status
 
-> **File:** `index.html` (renamed from `audio-sessions.html`)
-> **Last updated:** March 24, 2026
+> **Last updated:** March 25, 2026
 > **Deployed via:** GitHub Pages
-> **Stack:** Pure HTML + CSS + Vanilla JS (no frameworks, no dependencies except Google Fonts & Font Awesome CDN)
+> **Stack:** Pure HTML + CSS + Vanilla JS — no frameworks or build tools required
 
 ---
 
 ## Project Overview
 
-A Google Drive-style audio session download website for wellness programs. Users can browse sessions, switch languages, select individual or multiple programs, and download them directly from Google Drive links.
+A wellness audio session download website. Users browse sessions, switch languages, select programs, and download audio files directly from Google Drive.
+
+---
+
+## File Structure
+
+```
+your-repo/
+├── index.html    — Page structure and sidebar navigation
+├── style.css     — All visual styles and responsive breakpoints
+├── script.js     — All application logic (data loading, rendering, downloads)
+├── data.json     — All content: sessions, programs, languages, links, thumbnails
+└── CHANGELOG.md  — This file
+```
+
+**IMPORTANT — Local development:**
+`fetch('data.json')` in `script.js` requires an HTTP server. Opening `index.html`
+directly from your filesystem (`file://` protocol) will fail. Use one of:
+- VS Code → Live Server extension (right-click index.html → Open with Live Server)
+- Terminal: `npx serve .`
+- Terminal: `python -m http.server`
+
+GitHub Pages serves over HTTP, so it works fine in production.
 
 ---
 
@@ -17,80 +38,87 @@ A Google Drive-style audio session download website for wellness programs. Users
 
 | Feature | Status |
 |---|---|
-| Sidebar with minimize/maximize | ✅ Done |
+| Sidebar with minimize/maximize (desktop) | ✅ Done |
 | Sidebar toggle tab (right edge, always visible) | ✅ Done |
+| Mobile sidebar drawer + overlay | ✅ Done |
 | 3 sessions in sidebar | ✅ Done |
-| 5 programs per session | ✅ Done |
-| 4 languages per session (EN, DE, FR, IT) | ✅ Done |
-| English as default language | ✅ Done |
-| Topbar: session icon + title (always visible) | ✅ Done |
-| Topbar: globe → lang code → popover | ✅ Done |
-| Card thumbnail: duration tag only (no mod, no lang tags) | ✅ Done |
-| Card body: title + full-width Download button | ✅ Done |
-| Card title: 17px, 2-line clamp, high contrast | ✅ Done |
-| Card hover: soft sage wash, no lift (Google Drive style) | ✅ Done |
+| Weight Loss EN — 45 real programs with thumbnails, links, sizes, durations | ✅ Done |
+| All other sessions/languages — placeholder content | ⏳ Pending |
+| Language switcher (globe → popover, 4 languages) | ✅ Done |
+| Card design: thumbnail + title (2-line clamp) + Download button | ✅ Done |
+| Card hover: soft sage wash (Google Drive style, no lift) | ✅ Done |
 | Card selected: full-card sage green wash, no border ring | ✅ Done |
-| Checkbox + info btn: fade in on hover / stay on selected | ✅ Done |
-| Info popup: title + duration + file size + language | ✅ Done |
-| File size field in data (`size: '— MB'` placeholder) | ✅ Done |
+| Checkbox + info button: fade in on hover, stay on selected | ✅ Done |
+| Info popup: full title + duration + file size + language | ✅ Done |
+| Duration tag on thumbnail (rounded to nearest minute) | ✅ Done |
 | Select All / Deselect All / Clear | ✅ Done |
 | Download Selected + Download All | ✅ Done |
+| Download URLs: `drive.google.com/uc?export=download&id=` format | ✅ Done |
+| Thumbnail URLs: `lh3.googleusercontent.com/d/` format (image embed) | ✅ Done |
+| Loading state shown while data.json fetches | ✅ Done |
+| Error state if data.json fails to load | ✅ Done |
+| Responsive (mobile 2-col, tablet 3-col, desktop auto-fill) | ✅ Done |
 | Mobile: 2-row action bar, title always visible | ✅ Done |
-| Responsive (mobile, tablet, desktop) | ✅ Done |
 | Toast notifications | ✅ Done |
-| Google Drive links (placeholder `#`) | ⏳ Pending |
-| Real file sizes | ⏳ Pending — replace `— MB` with actual sizes |
-| Card thumbnail images | ⏳ Pending |
-| Logo image | ⏳ Pending |
-| More languages | ⏳ Planned |
-| GitHub Pages deployment | ✅ Instructions provided |
+| Full developer documentation (JSDoc + inline comments) | ✅ Done |
+| Separated into index.html / style.css / script.js / data.json | ✅ Done |
+| Real logo image | ⏳ Pending — replace SVG placeholder |
+| Firebase authentication (Option B — subscription gating) | ⏳ Planned |
 
 ---
 
 ## Changelog
 
-### v1.8 — `feat/weight-loss-en-real-content` *(current)*
-**Commit message:** `feat: add 45 real programs to Weight Loss EN — thumbnails, links, sizes, durations`
+### v1.9 — `refactor/separate-data-and-docs` *(current)*
+**Commit message:** `refactor: extract data.json, convert download URLs, add full developer docs`
 
 Changes:
-- ✅ Weight Loss → English now has all 45 real programs (was 5 placeholder entries)
-- ✅ All 45 real thumbnail images from Google Drive (`lh3.googleusercontent.com`)
-- ✅ All 45 real download links from Google Drive
-- ✅ All 45 real file sizes (9.1 MB – 27 MB)
-- ✅ All 45 durations rounded to nearest minute
-- ✅ Sidebar badge updated from `5` → `45` for Weight Loss session
-- ✅ Card renderer updated: uses real `thumb` image as background when present, falls back to CSS gradient when not set (all other sessions/languages still use gradients cleanly)
-- ✅ Icon overlay hidden when real thumbnail image is present
-- ✅ All other sessions (Deep Relaxation, Focus & Energy) and all other languages (DE, FR, IT) unchanged
-- ✅ Changelog updated
+- ✅ All content data extracted from `script.js` into `data.json`
+  - `sessions` array (all 3 sessions × 4 languages × programs)
+  - `languages` array (EN, DE, FR, IT)
+  - `_comment` and `_fields` keys document the JSON structure for editors
+- ✅ All 45 Weight Loss EN `url` download links converted:
+  - **Before:** `https://lh3.googleusercontent.com/d/FILE_ID`
+  - **After:** `https://drive.google.com/uc?export=download&id=FILE_ID`
+  - `thumb` image URLs stay as `lh3.googleusercontent.com/d/` (correct for image embedding)
+- ✅ `script.js` updated to `fetch('data.json')` on load; all data removed from JS
+- ✅ Loading indicator added to `index.html` grid area (shown while data.json loads)
+- ✅ Error state added to `script.js` (friendly message if data.json fails to load)
+- ✅ Full JSDoc documentation added to `script.js`:
+  - File header with architecture overview, dependencies, and Firebase migration notes
+  - Every function documented with description, `@param`, `@type` where applicable
+  - Inline comments explain non-obvious logic (thumbnail fallback, download sequencing, etc.)
+- ✅ Section documentation added to `style.css` (numbered table of contents, section headers, inline notes)
+- ✅ HTML comments added to `index.html` (file structure, data-idx alignment, aria labels)
+- ✅ `CHANGELOG.md` updated with v1.9
 
 ---
 
-### v1.7 — `feat/card-redesign-ux` *(current)*
+### v1.8 — `feat/weight-loss-en-real-content`
+**Commit message:** `feat: add 45 real programs to Weight Loss EN — thumbnails, links, sizes, durations`
+
+Changes:
+- ✅ Weight Loss → English: 45 real programs replacing 5 placeholder entries
+- ✅ All 45 real thumbnails, download links, file sizes, and rounded durations
+- ✅ Sidebar badge updated from `5` → `45` for Weight Loss
+- ✅ Card renderer supports real thumbnail images with gradient fallback
+
+---
+
+### v1.7 — `feat/card-redesign-ux`
 **Commit message:** `feat: card redesign — clean tags, sage selected wash, accessible layout for all ages`
 
 Changes:
-- ✅ Module number tag removed from thumbnail
-- ✅ Language tag removed from thumbnail
-- ✅ Duration shown as pill tag on thumbnail bottom-left (clock + time)
-- ✅ Info popup: module removed → file size added (`— MB` placeholder)
+- ✅ Module number and language tags removed from thumbnail
+- ✅ Duration shown as pill tag (bottom-left of thumbnail)
+- ✅ Info popup: module removed → file size added
 - ✅ Selected state: full-card sage wash, no border ring (Google Drive style)
-- ✅ Hover: very subtle sage tint, no lift/transform
-- ✅ Checkbox + info btn fade in on hover, always visible when selected
-- ✅ Title 17px, high contrast, easy to read for all ages
-- ✅ Download button full-width, tall, easy to tap (44px+ touch target)
-- ✅ `size` field added to all DATA program objects
+- ✅ Title 17px, large Download button for 30–70 age group accessibility
 
 ---
 
 ### v1.6 — `fix/mobile-header-and-button-layout`
 **Commit message:** `fix: revert globe lang btn, show title on mobile, fix mobile button layout`
-
-Changes:
-- ✅ Globe icon reverted, flags removed everywhere
-- ✅ Session title always visible on mobile (truncates, never hides)
-- ✅ Button text labels never hidden on mobile
-- ✅ Mobile: Row 1 = selection buttons, Row 2 = download buttons (right-aligned)
 
 ---
 
@@ -119,72 +147,38 @@ Changes:
 
 ---
 
-## Sessions & Programs
+## data.json Field Reference
 
-### Session 1 — Weight Loss Session · `fa-fire-flame-curved`
-| Module | EN | DE | FR | IT |
-|---|---|---|---|---|
-| Module 1 | Weight Loss Introduction | Gewichtsverlust Einführung | Introduction à la perte de poids | Introduzione alla perdita di peso |
-| Module 2 | Calorie Burning Boost | Kalorienverbrennung Boost | Brûleur de graisses intensif | Bruciagrassi intenso |
-| Module 3 | Healthy Eating Habits | Gesunde Ernährung | Alimentation saine & consciente | Alimentazione consapevole |
-| Module 4 | Motivation & Mindset Booster | Motivations-Booster | Motivation & confiance en soi | Motivazione & fiducia |
-| Module 5 | Deep Relaxation for Weight Loss | Tiefenentspannung & Abnehmen | Relaxation profonde & minceur | Rilassamento profondo & dimagrire |
+Each program object has these fields:
 
-### Session 2 — Deep Relaxation Session · `fa-cloud-moon`
-| Module | EN | DE | FR | IT |
-|---|---|---|---|---|
-| Module 1 | Relaxation Fundamentals | Tiefenentspannung Grundlagen | Fondamentaux de la relaxation | Fondamenti del rilassamento |
-| Module 2 | Deep Sleep & Recovery | Schlaf & Erholung | Sommeil profond & réparateur | Sonno profondo & ristoratore |
-| Module 3 | Breathing Exercises for Calm | Atemübungen für innere Ruhe | Exercices de respiration douce | Esercizi di respirazione dolce |
-| Module 4 | Releasing Stress & Letting Go | Stress abbauen & loslassen | Libérer le stress & lâcher prise | Liberarsi dallo stress |
-| Module 5 | Inner Peace & Stillness | Innerer Frieden | Paix intérieure profonde | Pace interiore profonda |
+| Field   | Type   | Description | Example |
+|---|---|---|---|
+| `title` | string | Display name (card + info popup) | `"Changing outlook"` |
+| `dur`   | string | Duration (rounded to nearest minute) | `"20 mins"` |
+| `size`  | string | File size | `"24.1 MB"` |
+| `url`   | string | Google Drive download link | `"https://drive.google.com/uc?export=download&id=..."` |
+| `thumb` | string | Google Drive image URL for thumbnail | `"https://lh3.googleusercontent.com/d/..."` |
 
-### Session 3 — Focus & Energy Session · `fa-seedling`
-| Module | EN | DE | FR | IT |
-|---|---|---|---|---|
-| Module 1 | Concentration & Mental Clarity | Konzentration & geistige Klarheit | Concentration & clarté mentale | Concentrazione & chiarezza mentale |
-| Module 2 | Morning Energy Activation | Morgenenergie Aktivierung | Activation énergétique du matin | Attivazione energetica mattutina |
-| Module 3 | Productivity Flow State | Produktivitäts-Flow | Flow de productivité | Flusso di produttività |
-| Module 4 | Building Mental Strength | Mentale Stärke aufbauen | Construire la force mentale | Costruire la forza mentale |
-| Module 5 | Evening Regeneration | Abendliche Regeneration | Régénération du soir | Rigenerazione serale |
+**`thumb` is optional.** If omitted, the card uses a CSS gradient + icon fallback automatically.
 
----
-
-## Data Field Reference
-
-Each program object now has 4 fields:
-```js
-{ title: 'Program Name', dur: '22 min', size: '— MB', url: '#' }
+**URL formats:**
 ```
-
-| Field | Description | Status |
-|---|---|---|
-| `title` | Program display name | ✅ Filled |
-| `dur` | Duration string e.g. `'22 min'` | ✅ Filled |
-| `size` | File size e.g. `'48 MB'` | ⏳ Replace `'— MB'` when known |
-| `url` | Google Drive download link | ⏳ Replace `'#'` |
-
----
-
-## How to Add Google Drive Links + File Sizes
-
-Replace `url: '#'` and `size: '— MB'` for each program:
-```js
-{ title: '...', dur: '22 min', size: '48 MB', url: 'https://drive.google.com/uc?export=download&id=FILE_ID' }
+Download: https://drive.google.com/uc?export=download&id=FILE_ID
+Thumbnail: https://lh3.googleusercontent.com/d/FILE_ID
 ```
 
 ---
 
 ## How to Add a New Language
 
-```js
-// In LANGUAGES array:
-{ code: 'es', label: 'Spanish' },
-
-// In each session's programs object:
-es: [
-  { title: '...', dur: '22 min', size: '— MB', url: '#' },
-  // 5 total
+1. Add to `data.json` › `languages`:
+```json
+{ "code": "es", "label": "Spanish" }
+```
+2. Add programs for each session in `data.json` › `sessions[n].programs`:
+```json
+"es": [
+  { "title": "...", "dur": "20 mins", "size": "— MB", "url": "#" }
 ]
 ```
 
@@ -192,15 +186,22 @@ es: [
 
 ## How to Add a New Session
 
-```js
-// In DATA array:
-{ name: 'Your Session', icon: 'fa-YOUR-ICON', programs: { en:[...], de:[...], fr:[...], it:[...] } }
+1. Add to `data.json` › `sessions`:
+```json
+{
+  "name": "Your Session Name",
+  "icon": "fa-your-icon",
+  "programs": {
+    "en": [ { "title": "...", "dur": "20 mins", "size": "— MB", "url": "#" } ],
+    "de": [], "fr": [], "it": []
+  }
+}
 ```
-
+2. Add a sidebar item in `index.html` (inside `<nav class="sb-nav">`).
+   `data-idx` must match the session's zero-based position in `data.json › sessions[]`:
 ```html
-<!-- In sidebar HTML (data-idx = 0-based position in DATA): -->
-<div class="sb-item" data-idx="3" data-tip="Your Session" onclick="selectSess(3,this)">
-  <div class="sb-icon"><i class="fa-solid fa-YOUR-ICON"></i></div>
+<div class="sb-item" data-idx="3" data-tip="Your Session" onclick="selectSess(3, this)">
+  <div class="sb-icon"><i class="fa-solid fa-your-icon"></i></div>
   <span class="sb-text">Your Session Name</span>
   <span class="sb-badge">5</span>
 </div>
@@ -211,9 +212,13 @@ es: [
 ## GitHub Deployment
 
 ```bash
-git add index.html CHANGELOG.md
-git commit -m "feat: card redesign — clean tags, sage selected wash, accessible layout for all ages"
+# Push all files
+git add index.html style.css script.js data.json CHANGELOG.md
+git commit -m "refactor: extract data.json, convert download URLs, add full developer docs"
 git push
+
+# Enable GitHub Pages (one-time setup):
+# Repo → Settings → Pages → Source: Deploy from branch → main / root → Save
 ```
 
 **Live URL:** `https://YOUR_USERNAME.github.io/YOUR_REPO_NAME`
@@ -222,10 +227,8 @@ git push
 
 ## Pending / Next Steps
 
-- [ ] Replace all `url: '#'` with real Google Drive download links
-- [ ] Replace all `size: '— MB'` with actual file sizes
-- [ ] Replace placeholder card thumbnails with real images
-- [ ] Replace SVG placeholder logo with real brand logo
-- [ ] Rename sessions 2 & 3 if needed
-- [ ] Add more languages as needed
-- [ ] Verify GitHub Pages deployment
+- [ ] Fill in placeholder programs for DE, FR, IT Weight Loss programs
+- [ ] Fill in real programs for Deep Relaxation and Focus & Energy sessions
+- [ ] Replace SVG placeholder logo with real brand image
+- [ ] Implement Firebase authentication (Option B — subscription gating)
+- [ ] Verify GitHub Pages deployment with all 4 files

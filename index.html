@@ -1,135 +1,273 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Serene Audio — Wellness Sessions</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
-<link rel="stylesheet" href="style.css">
+  <!--
+    ==========================================================================
+    Serene Audio — index.html
+    ==========================================================================
+    Main entry point. Contains only structural HTML — no inline styles or
+    JavaScript. All content is loaded dynamically from data.json via script.js.
+
+    FILE STRUCTURE:
+      index.html   ← You are here (page structure + sidebar nav)
+      style.css    ← All visual styles and responsive breakpoints
+      script.js    ← All application logic (data loading, rendering, downloads)
+      data.json    ← All session/program content, links, and language data
+
+    EXTERNAL DEPENDENCIES (loaded via CDN — no npm required):
+      Google Fonts  — Cormorant Garamond (serif display) + Jost (UI sans-serif)
+      Font Awesome  — Icons throughout the interface
+
+    SIDEBAR NAV — IMPORTANT:
+      Each session nav item has a data-idx attribute that must match the
+      zero-based index of that session in data.json › sessions[].
+        data-idx="0" → sessions[0] (Weight Loss)
+        data-idx="1" → sessions[1] (Deep Relaxation)
+        data-idx="2" → sessions[2] (Focus & Energy)
+      When adding a new session, add it to data.json AND add a new
+      .sb-item here with the correct data-idx.
+    ==========================================================================
+  -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Serene Audio — Wellness Sessions</title>
+
+  <!-- Google Fonts: Cormorant Garamond (headings/titles) + Jost (UI body text) -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome 6.5 — icon library used throughout the UI -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+
+  <!-- Application styles -->
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-<div id="overlay" onclick="closeMobile()"></div>
+  <!--
+    Mobile overlay — dark backdrop behind the sidebar drawer on mobile.
+    Clicking it closes the sidebar (handled by closeMobile() in script.js).
+  -->
+  <div id="overlay" onclick="closeMobile()"></div>
 
-<!-- ── SIDEBAR ── -->
-<aside id="sidebar">
-  <div id="sb-tab" onclick="toggleSidebar()" title="Toggle sidebar">
-    <i class="fa-solid fa-chevron-left" id="tab-icon"></i>
-  </div>
-  <div class="sb-inner">
-    <div class="sb-header">
-      <div class="logo-mark">
-        <svg viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M11 2 C6 7, 6 15, 11 20 C16 15, 16 7, 11 2Z" fill="none" stroke="#82b494" stroke-width="1.4"/>
-          <circle cx="11" cy="11" r="3" fill="#5f9070"/>
-          <line x1="11" y1="8" x2="11" y2="14" stroke="#82b494" stroke-width="1.2" stroke-linecap="round"/>
-          <path d="M11 11 C13 9.5, 15 10.5, 15.5 11" stroke="#82b494" stroke-width="1.1" stroke-linecap="round"/>
-          <path d="M11 11 C9 9.5, 7 10.5, 6.5 11" stroke="#82b494" stroke-width="1.1" stroke-linecap="round"/>
-        </svg>
-      </div>
-      <div class="logo-words">
-        <span class="logo-name">Serene Audio</span>
-        <span class="logo-tag">Wellness Sessions</span>
-      </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       SIDEBAR
+       Fixed left panel. Collapses to icon-only (mini) mode on desktop.
+       Becomes a slide-in drawer on mobile (width ≤ 820px).
+       ═══════════════════════════════════════════════════════════════════ -->
+  <aside id="sidebar">
+
+    <!--
+      Toggle tab — a narrow tab that sticks out from the right edge of the
+      sidebar. Always visible even when minimised so users can always expand it.
+    -->
+    <div id="sb-tab" onclick="toggleSidebar()" title="Toggle sidebar">
+      <i class="fa-solid fa-chevron-left" id="tab-icon"></i>
     </div>
 
-    <nav class="sb-nav">
-      <div class="sb-label">Sessions</div>
-      <div class="sb-item active" data-idx="0" data-tip="Weight Loss" onclick="selectSess(0,this)">
-        <div class="sb-icon"><i class="fa-solid fa-fire-flame-curved"></i></div>
-        <span class="sb-text">Weight Loss Session</span>
-        <span class="sb-badge">45</span>
-      </div>
-      <div class="sb-item" data-idx="1" data-tip="Deep Relaxation" onclick="selectSess(1,this)">
-        <div class="sb-icon"><i class="fa-solid fa-cloud-moon"></i></div>
-        <span class="sb-text">Deep Relaxation Session</span>
-        <span class="sb-badge">5</span>
-      </div>
-      <div class="sb-item" data-idx="2" data-tip="Focus &amp; Energy" onclick="selectSess(2,this)">
-        <div class="sb-icon"><i class="fa-solid fa-seedling"></i></div>
-        <span class="sb-text">Focus &amp; Energy Session</span>
-        <span class="sb-badge">5</span>
-      </div>
-      <div class="sb-label" style="margin-top:12px">Library</div>
-      <div class="sb-item" data-tip="All Programs" onclick="toast('Feature coming soon','info')">
-        <div class="sb-icon"><i class="fa-solid fa-grip"></i></div>
-        <span class="sb-text">All Programs</span>
-      </div>
-      <div class="sb-item" data-tip="Saved" onclick="toast('Feature coming soon','info')">
-        <div class="sb-icon"><i class="fa-regular fa-bookmark"></i></div>
-        <span class="sb-text">Saved</span>
-      </div>
-    </nav>
+    <!-- Inner wrapper: clips content when sidebar collapses -->
+    <div class="sb-inner">
 
-    <div class="sb-footer">
-      <div class="sb-item" data-tip="Settings" onclick="toast('Settings coming soon','info')">
-        <div class="sb-icon"><i class="fa-solid fa-sliders"></i></div>
-        <span class="sb-text">Settings</span>
-      </div>
-    </div>
-  </div>
-</aside>
-
-<!-- ── MAIN ── -->
-<div id="main">
-
-  <header class="topbar">
-    <button class="mobile-btn" onclick="openMobile()">
-      <i class="fa-solid fa-bars-staggered"></i>
-    </button>
-    <div class="tb-sess-icon" id="tb-icon">
-      <i class="fa-solid fa-fire-flame-curved"></i>
-    </div>
-    <div class="tb-title" id="tb-title">Weight Loss Session</div>
-
-    <div class="lang-wrap" id="lang-wrap">
-      <button class="lang-globe-btn" id="lang-globe-btn" onclick="toggleLangPopover(event)">
-        <i class="fa-solid fa-globe globe"></i>
-        <span class="lang-code" id="lang-current-code">EN</span>
-        <i class="fa-solid fa-chevron-down lang-caret" id="lang-caret"></i>
-      </button>
-      <div class="lang-popover" id="lang-popover">
-        <span class="lang-popover-label">Select Language</span>
-        <div id="lang-opts-container"></div>
-      </div>
-    </div>
-  </header>
-
-  <main class="content">
-
-    <div class="act-row">
-      <div class="act-left">
-        <div class="sel-pill" id="sel-pill">
-          <i class="fa-solid fa-circle-check"></i>
-          <span id="sel-cnt">0</span> selected
+      <!-- Sidebar header: logo mark + brand name + tagline -->
+      <div class="sb-header">
+        <div class="logo-mark">
+          <!-- Placeholder leaf SVG logo — replace with real brand logo -->
+          <svg viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M11 2 C6 7, 6 15, 11 20 C16 15, 16 7, 11 2Z" fill="none" stroke="#82b494" stroke-width="1.4"/>
+            <circle cx="11" cy="11" r="3" fill="#5f9070"/>
+            <line x1="11" y1="8" x2="11" y2="14" stroke="#82b494" stroke-width="1.2" stroke-linecap="round"/>
+            <path d="M11 11 C13 9.5, 15 10.5, 15.5 11" stroke="#82b494" stroke-width="1.1" stroke-linecap="round"/>
+            <path d="M11 11 C9 9.5, 7 10.5, 6.5 11" stroke="#82b494" stroke-width="1.1" stroke-linecap="round"/>
+          </svg>
         </div>
-        <button class="btn btn-outline" id="sel-all-btn" onclick="toggleAll()">
-          <i class="fa-regular fa-square-check"></i> Select All
-        </button>
-        <button class="btn btn-outline" id="clr-btn" style="display:none" onclick="clearSel()">
-          <i class="fa-solid fa-xmark"></i> Clear
-        </button>
+        <div class="logo-words">
+          <span class="logo-name">Serene Audio</span>
+          <span class="logo-tag">Wellness Sessions</span>
+        </div>
+      </div><!-- /sb-header -->
+
+      <!-- Sidebar navigation -->
+      <nav class="sb-nav" aria-label="Session navigation">
+
+        <div class="sb-label">Sessions</div>
+
+        <!--
+          Session nav items.
+          data-idx  → must match the session's index in data.json › sessions[]
+          data-tip  → tooltip text shown in mini (icon-only) mode
+          The badge shows the number of programs. Update it when programs change.
+        -->
+        <div class="sb-item active" data-idx="0" data-tip="Weight Loss" onclick="selectSess(0, this)">
+          <div class="sb-icon"><i class="fa-solid fa-fire-flame-curved"></i></div>
+          <span class="sb-text">Weight Loss Session</span>
+          <span class="sb-badge">45</span>
+        </div>
+
+        <div class="sb-item" data-idx="1" data-tip="Deep Relaxation" onclick="selectSess(1, this)">
+          <div class="sb-icon"><i class="fa-solid fa-cloud-moon"></i></div>
+          <span class="sb-text">Deep Relaxation Session</span>
+          <span class="sb-badge">5</span>
+        </div>
+
+        <div class="sb-item" data-idx="2" data-tip="Focus &amp; Energy" onclick="selectSess(2, this)">
+          <div class="sb-icon"><i class="fa-solid fa-seedling"></i></div>
+          <span class="sb-text">Focus &amp; Energy Session</span>
+          <span class="sb-badge">5</span>
+        </div>
+
+        <!-- Library section — features not yet implemented -->
+        <div class="sb-label" style="margin-top:12px">Library</div>
+
+        <div class="sb-item" data-tip="All Programs" onclick="toast('Feature coming soon', 'info')">
+          <div class="sb-icon"><i class="fa-solid fa-grip"></i></div>
+          <span class="sb-text">All Programs</span>
+        </div>
+
+        <div class="sb-item" data-tip="Saved" onclick="toast('Feature coming soon', 'info')">
+          <div class="sb-icon"><i class="fa-regular fa-bookmark"></i></div>
+          <span class="sb-text">Saved</span>
+        </div>
+
+      </nav><!-- /sb-nav -->
+
+      <!-- Sidebar footer: settings and utility links -->
+      <div class="sb-footer">
+        <div class="sb-item" data-tip="Settings" onclick="toast('Settings coming soon', 'info')">
+          <div class="sb-icon"><i class="fa-solid fa-sliders"></i></div>
+          <span class="sb-text">Settings</span>
+        </div>
+      </div><!-- /sb-footer -->
+
+    </div><!-- /sb-inner -->
+  </aside><!-- /sidebar -->
+
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       MAIN CONTENT AREA
+       Shifts right to make room for the sidebar. Collapses to full width
+       on mobile or when sidebar is in mini mode.
+       ═══════════════════════════════════════════════════════════════════ -->
+  <div id="main">
+
+    <!--
+      Sticky top bar.
+      Contains (left→right): mobile menu button, session icon, session title,
+      language switcher (always pinned to the right via margin-left:auto).
+    -->
+    <header class="topbar">
+
+      <!-- Hamburger button — mobile only (hidden on desktop via CSS) -->
+      <button class="mobile-btn" onclick="openMobile()" aria-label="Open navigation menu">
+        <i class="fa-solid fa-bars-staggered"></i>
+      </button>
+
+      <!-- Current session icon pill — updated by render() in script.js -->
+      <div class="tb-sess-icon" id="tb-icon" aria-hidden="true">
+        <i class="fa-solid fa-fire-flame-curved"></i>
       </div>
-      <div class="act-right">
-        <button class="btn btn-sage" id="dl-sel-btn" onclick="downloadSel()" disabled>
-          <i class="fa-solid fa-download"></i> Download Selected
+
+      <!-- Current session title — updated by render() in script.js -->
+      <div class="tb-title" id="tb-title">Weight Loss Session</div>
+
+      <!--
+        Language switcher — globe icon opens a popover listing all languages.
+        margin-left:auto in CSS keeps this pinned to the right at all screen sizes.
+      -->
+      <div class="lang-wrap" id="lang-wrap">
+        <button class="lang-globe-btn" id="lang-globe-btn"
+                onclick="toggleLangPopover(event)"
+                aria-label="Change language"
+                aria-haspopup="listbox">
+          <i class="fa-solid fa-globe globe"></i>
+          <!-- Updated by switchLang() in script.js when language changes -->
+          <span class="lang-code" id="lang-current-code">EN</span>
+          <i class="fa-solid fa-chevron-down lang-caret" id="lang-caret"></i>
         </button>
-        <button class="btn btn-dark" onclick="downloadAll()">
-          <i class="fa-solid fa-folder-arrow-down"></i> Download All
-        </button>
-      </div>
-    </div>
 
-    <div class="cards-grid" id="grid"></div>
+        <!-- Language popover — options built dynamically by buildLangOpts() -->
+        <div class="lang-popover" id="lang-popover" role="listbox">
+          <span class="lang-popover-label">Select Language</span>
+          <div id="lang-opts-container"></div>
+        </div>
+      </div><!-- /lang-wrap -->
 
-  </main>
-</div>
+    </header><!-- /topbar -->
 
-<div id="toasts"></div>
 
-<script src="script.js">
+    <!-- Main content: action bar + card grid -->
+    <main class="content">
 
-</script>
+      <!--
+        Action row — two logical groups:
+          Left  (act-left):  selection management — count pill, Select All, Clear
+          Right (act-right): download actions — Download Selected, Download All
+
+        On mobile (≤820px): wraps into two rows, right group right-aligned.
+      -->
+      <div class="act-row" role="toolbar" aria-label="Selection and download actions">
+
+        <!-- Left group: selection management -->
+        <div class="act-left">
+
+          <!-- Selection count pill: hidden until at least one card is selected -->
+          <div class="sel-pill" id="sel-pill" aria-live="polite">
+            <i class="fa-solid fa-circle-check"></i>
+            <span id="sel-cnt">0</span> selected
+          </div>
+
+          <!-- Toggles between "Select All" and "Deselect All" — managed by updateUI() -->
+          <button class="btn btn-outline" id="sel-all-btn" onclick="toggleAll()">
+            <i class="fa-regular fa-square-check"></i> Select All
+          </button>
+
+          <!-- Clears all selections — hidden until at least one card is selected -->
+          <button class="btn btn-outline" id="clr-btn" style="display:none" onclick="clearSel()">
+            <i class="fa-solid fa-xmark"></i> Clear
+          </button>
+
+        </div><!-- /act-left -->
+
+        <!-- Right group: download actions -->
+        <div class="act-right">
+
+          <!-- Disabled until at least one card is selected -->
+          <button class="btn btn-sage" id="dl-sel-btn" onclick="downloadSel()" disabled>
+            <i class="fa-solid fa-download"></i> Download Selected
+          </button>
+
+          <!-- Always active — downloads all programs in the current session + language -->
+          <button class="btn btn-dark" onclick="downloadAll()">
+            <i class="fa-solid fa-folder-arrow-down"></i> Download All
+          </button>
+
+        </div><!-- /act-right -->
+
+      </div><!-- /act-row -->
+
+
+      <!--
+        Card grid — populated dynamically by render() in script.js.
+        Shows a loading indicator while data.json is being fetched.
+      -->
+      <div class="cards-grid" id="grid">
+        <!-- Loading state: shown until data.json is loaded -->
+        <div id="loading-state" style="grid-column:1/-1;padding:48px 20px;text-align:center;color:var(--muted)">
+          <i class="fa-solid fa-circle-notch fa-spin" style="font-size:24px;margin-bottom:14px;display:block;opacity:.5"></i>
+          <span style="font-size:13px">Loading programs…</span>
+        </div>
+      </div><!-- /cards-grid -->
+
+    </main><!-- /content -->
+
+  </div><!-- /main -->
+
+
+  <!-- Toast notification container — managed by toast() in script.js -->
+  <div id="toasts" aria-live="assertive" aria-atomic="true"></div>
+
+
+  <!-- Application logic — loaded last so DOM is ready when script executes -->
+  <script src="script.js"></script>
+
 </body>
 </html>
