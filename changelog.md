@@ -49,6 +49,23 @@ A Google Drive-style audio session download website for wellness programs. Users
 
 ## Changelog
 
+### v1.8 — `feat/weight-loss-en-real-content` *(current)*
+**Commit message:** `feat: add 45 real programs to Weight Loss EN — thumbnails, links, sizes, durations`
+
+Changes:
+- ✅ Weight Loss → English now has all 45 real programs (was 5 placeholder entries)
+- ✅ All 45 real thumbnail images from Google Drive (`lh3.googleusercontent.com`)
+- ✅ All 45 real download links from Google Drive
+- ✅ All 45 real file sizes (9.1 MB – 27 MB)
+- ✅ All 45 durations rounded to nearest minute
+- ✅ Sidebar badge updated from `5` → `45` for Weight Loss session
+- ✅ Card renderer updated: uses real `thumb` image as background when present, falls back to CSS gradient when not set (all other sessions/languages still use gradients cleanly)
+- ✅ Icon overlay hidden when real thumbnail image is present
+- ✅ All other sessions (Deep Relaxation, Focus & Energy) and all other languages (DE, FR, IT) unchanged
+- ✅ Changelog updated
+
+---
+
 ### v1.7 — `feat/card-redesign-ux` *(current)*
 **Commit message:** `feat: card redesign — clean tags, sage selected wash, accessible layout for all ages`
 
