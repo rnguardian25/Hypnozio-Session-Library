@@ -5,18 +5,11 @@
     ==========================================================================
     Serene Audio — index.html
     ==========================================================================
-    Main entry point. Contains only structural HTML — no inline styles or
-    JavaScript. All content is loaded dynamically from data.json via script.js.
-
     FILE STRUCTURE:
       index.html   ← You are here (page structure + sidebar nav)
       style.css    ← All visual styles and responsive breakpoints
       script.js    ← All application logic (data loading, rendering, downloads)
       data.json    ← All session/program content, links, and language data
-
-    EXTERNAL DEPENDENCIES (loaded via CDN — no npm required):
-      Google Fonts  — Cormorant Garamond (serif display) + Jost (UI sans-serif)
-      Font Awesome  — Icons throughout the interface
 
     SIDEBAR NAV — IMPORTANT:
       Each session nav item has a data-idx attribute that must match the
@@ -26,16 +19,21 @@
         data-idx="2" → sessions[2] (Focus & Energy)
       When adding a new session, add it to data.json AND add a new
       .sb-item here with the correct data-idx.
+
+    SEARCH BAR:
+      The search icon (#search-btn) in the topbar toggles the search input
+      (#search-input) open/closed. Search is handled entirely by script.js —
+      see toggleSearch(), expandSearch(), collapseSearch(), filterCards().
     ==========================================================================
   -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Serene Audio — Wellness Sessions</title>
 
-  <!-- Google Fonts: Cormorant Garamond (headings/titles) + Jost (UI body text) -->
+  <!-- Google Fonts: Cormorant Garamond (headings) + Jost (UI body text) -->
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
-  <!-- Font Awesome 6.5 — icon library used throughout the UI -->
+  <!-- Font Awesome 6.5 — icon library -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
 
   <!-- Application styles -->
@@ -43,35 +41,28 @@
 </head>
 <body>
 
-  <!--
-    Mobile overlay — dark backdrop behind the sidebar drawer on mobile.
-    Clicking it closes the sidebar (handled by closeMobile() in script.js).
-  -->
+  <!-- Mobile overlay: dark backdrop behind the sidebar drawer -->
   <div id="overlay" onclick="closeMobile()"></div>
 
 
-  <!-- ═══════════════════════════════════════════════════════════════════
+  <!-- ═══════════════════════════════════════════════════════════════
        SIDEBAR
-       Fixed left panel. Collapses to icon-only (mini) mode on desktop.
-       Becomes a slide-in drawer on mobile (width ≤ 820px).
-       ═══════════════════════════════════════════════════════════════════ -->
+       Fixed left panel. Collapses to icon-only (mini) on desktop.
+       Becomes a slide-in drawer on mobile (≤820px).
+       ═══════════════════════════════════════════════════════════════ -->
   <aside id="sidebar">
 
-    <!--
-      Toggle tab — a narrow tab that sticks out from the right edge of the
-      sidebar. Always visible even when minimised so users can always expand it.
-    -->
+    <!-- Toggle tab: always visible on right edge, even when minimised -->
     <div id="sb-tab" onclick="toggleSidebar()" title="Toggle sidebar">
       <i class="fa-solid fa-chevron-left" id="tab-icon"></i>
     </div>
 
-    <!-- Inner wrapper: clips content when sidebar collapses -->
     <div class="sb-inner">
 
-      <!-- Sidebar header: logo mark + brand name + tagline -->
+      <!-- Logo header -->
       <div class="sb-header">
         <div class="logo-mark">
-          <!-- Placeholder leaf SVG logo — replace with real brand logo -->
+          <!-- Placeholder leaf SVG — replace with real brand logo -->
           <svg viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <path d="M11 2 C6 7, 6 15, 11 20 C16 15, 16 7, 11 2Z" fill="none" stroke="#82b494" stroke-width="1.4"/>
             <circle cx="11" cy="11" r="3" fill="#5f9070"/>
@@ -84,19 +75,14 @@
           <span class="logo-name">Serene Audio</span>
           <span class="logo-tag">Wellness Sessions</span>
         </div>
-      </div><!-- /sb-header -->
+      </div>
 
-      <!-- Sidebar navigation -->
+      <!-- Navigation -->
       <nav class="sb-nav" aria-label="Session navigation">
 
         <div class="sb-label">Sessions</div>
 
-        <!--
-          Session nav items.
-          data-idx  → must match the session's index in data.json › sessions[]
-          data-tip  → tooltip text shown in mini (icon-only) mode
-          The badge shows the number of programs. Update it when programs change.
-        -->
+        <!-- data-idx must match zero-based position in data.json › sessions[] -->
         <div class="sb-item active" data-idx="0" data-tip="Weight Loss" onclick="selectSess(0, this)">
           <div class="sb-icon"><i class="fa-solid fa-fire-flame-curved"></i></div>
           <span class="sb-text">Weight Loss Session</span>
@@ -115,7 +101,6 @@
           <span class="sb-badge">5</span>
         </div>
 
-        <!-- Library section — features not yet implemented -->
         <div class="sb-label" style="margin-top:12px">Library</div>
 
         <div class="sb-item" data-tip="All Programs" onclick="toast('Feature coming soon', 'info')">
@@ -128,146 +113,138 @@
           <span class="sb-text">Saved</span>
         </div>
 
-      </nav><!-- /sb-nav -->
+      </nav>
 
-      <!-- Sidebar footer: settings and utility links -->
       <div class="sb-footer">
         <div class="sb-item" data-tip="Settings" onclick="toast('Settings coming soon', 'info')">
           <div class="sb-icon"><i class="fa-solid fa-sliders"></i></div>
           <span class="sb-text">Settings</span>
         </div>
-      </div><!-- /sb-footer -->
+      </div>
 
-    </div><!-- /sb-inner -->
-  </aside><!-- /sidebar -->
+    </div>
+  </aside>
 
 
-  <!-- ═══════════════════════════════════════════════════════════════════
+  <!-- ═══════════════════════════════════════════════════════════════
        MAIN CONTENT AREA
-       Shifts right to make room for the sidebar. Collapses to full width
-       on mobile or when sidebar is in mini mode.
-       ═══════════════════════════════════════════════════════════════════ -->
+       ═══════════════════════════════════════════════════════════════ -->
   <div id="main">
 
     <!--
-      Sticky top bar.
-      Contains (left→right): mobile menu button, session icon, session title,
-      language switcher (always pinned to the right via margin-left:auto).
+      Topbar layout (left → right):
+        [hamburger]  [session icon]  [session title]  [search]  [globe]
+
+      When search is open, the input expands and the title shrinks/hides.
+      The globe button is always pinned to the right via margin-left:auto on .lang-wrap.
     -->
     <header class="topbar">
 
-      <!-- Hamburger button — mobile only (hidden on desktop via CSS) -->
+      <!-- Mobile hamburger — hidden on desktop -->
       <button class="mobile-btn" onclick="openMobile()" aria-label="Open navigation menu">
         <i class="fa-solid fa-bars-staggered"></i>
       </button>
 
-      <!-- Current session icon pill — updated by render() in script.js -->
+      <!-- Session icon — updated by render() -->
       <div class="tb-sess-icon" id="tb-icon" aria-hidden="true">
         <i class="fa-solid fa-fire-flame-curved"></i>
       </div>
 
-      <!-- Current session title — updated by render() in script.js -->
+      <!-- Session title — updated by render(). Hides when search is open on small screens -->
       <div class="tb-title" id="tb-title">Weight Loss Session</div>
 
       <!--
-        Language switcher — globe icon opens a popover listing all languages.
-        margin-left:auto in CSS keeps this pinned to the right at all screen sizes.
+        Search bar — icon button + expanding input.
+        #search-wrap   → outer container that expands via CSS class .open
+        #search-btn    → magnifying glass icon; becomes × when open
+        #search-input  → the actual text input, hidden until .open
+        Controlled entirely by toggleSearch(), expandSearch(), collapseSearch() in script.js.
       -->
+      <div class="search-wrap" id="search-wrap">
+        <button class="search-btn" id="search-btn"
+                onclick="toggleSearch(event)"
+                aria-label="Search programs">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+        <input  class="search-input"
+                id="search-input"
+                type="text"
+                placeholder="Search programs…"
+                oninput="onSearchInput(event)"
+                onkeydown="onSearchKeydown(event)"
+                autocomplete="off"
+                aria-label="Search programs in current language" />
+      </div>
+
+      <!-- Language switcher — always pinned right via margin-left:auto on .lang-wrap -->
       <div class="lang-wrap" id="lang-wrap">
         <button class="lang-globe-btn" id="lang-globe-btn"
                 onclick="toggleLangPopover(event)"
                 aria-label="Change language"
                 aria-haspopup="listbox">
           <i class="fa-solid fa-globe globe"></i>
-          <!-- Updated by switchLang() in script.js when language changes -->
           <span class="lang-code" id="lang-current-code">EN</span>
           <i class="fa-solid fa-chevron-down lang-caret" id="lang-caret"></i>
         </button>
 
-        <!-- Language popover — options built dynamically by buildLangOpts() -->
         <div class="lang-popover" id="lang-popover" role="listbox">
           <span class="lang-popover-label">Select Language</span>
           <div id="lang-opts-container"></div>
         </div>
-      </div><!-- /lang-wrap -->
+      </div>
 
-    </header><!-- /topbar -->
+    </header>
 
 
-    <!-- Main content: action bar + card grid -->
     <main class="content">
 
       <!--
-        Action row — two logical groups:
-          Left  (act-left):  selection management — count pill, Select All, Clear
-          Right (act-right): download actions — Download Selected, Download All
-
-        On mobile (≤820px): wraps into two rows, right group right-aligned.
+        Action row:
+          Left  (act-left):  [● N selected] [Select All / Deselect All] [Clear]
+          Right (act-right): [Download Selected] [Download All]
+        Mobile: wraps into 2 rows, right group right-aligned.
       -->
       <div class="act-row" role="toolbar" aria-label="Selection and download actions">
 
-        <!-- Left group: selection management -->
         <div class="act-left">
-
-          <!-- Selection count pill: hidden until at least one card is selected -->
           <div class="sel-pill" id="sel-pill" aria-live="polite">
             <i class="fa-solid fa-circle-check"></i>
             <span id="sel-cnt">0</span> selected
           </div>
-
-          <!-- Toggles between "Select All" and "Deselect All" — managed by updateUI() -->
           <button class="btn btn-outline" id="sel-all-btn" onclick="toggleAll()">
             <i class="fa-regular fa-square-check"></i> Select All
           </button>
-
-          <!-- Clears all selections — hidden until at least one card is selected -->
           <button class="btn btn-outline" id="clr-btn" style="display:none" onclick="clearSel()">
             <i class="fa-solid fa-xmark"></i> Clear
           </button>
+        </div>
 
-        </div><!-- /act-left -->
-
-        <!-- Right group: download actions -->
         <div class="act-right">
-
-          <!-- Disabled until at least one card is selected -->
           <button class="btn btn-sage" id="dl-sel-btn" onclick="downloadSel()" disabled>
             <i class="fa-solid fa-download"></i> Download Selected
           </button>
-
-          <!-- Always active — downloads all programs in the current session + language -->
-          <button class="btn btn-dark" onclick="downloadAll()">
+          <button class="btn btn-dark" id="dl-all-btn" onclick="downloadAll()">
             <i class="fa-solid fa-folder-arrow-down"></i> Download All
           </button>
+        </div>
 
-        </div><!-- /act-right -->
+      </div>
 
-      </div><!-- /act-row -->
-
-
-      <!--
-        Card grid — populated dynamically by render() in script.js.
-        Shows a loading indicator while data.json is being fetched.
-      -->
+      <!-- Card grid — populated by render() in script.js -->
       <div class="cards-grid" id="grid">
-        <!-- Loading state: shown until data.json is loaded -->
         <div id="loading-state" style="grid-column:1/-1;padding:48px 20px;text-align:center;color:var(--muted)">
           <i class="fa-solid fa-circle-notch fa-spin" style="font-size:24px;margin-bottom:14px;display:block;opacity:.5"></i>
           <span style="font-size:13px">Loading programs…</span>
         </div>
-      </div><!-- /cards-grid -->
+      </div>
 
-    </main><!-- /content -->
+    </main>
 
-  </div><!-- /main -->
+  </div>
 
-
-  <!-- Toast notification container — managed by toast() in script.js -->
+  <!-- Toast notification container -->
   <div id="toasts" aria-live="assertive" aria-atomic="true"></div>
 
-
-  <!-- Application logic — loaded last so DOM is ready when script executes -->
   <script src="script.js"></script>
-
 </body>
 </html>
