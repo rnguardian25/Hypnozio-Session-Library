@@ -1,6 +1,6 @@
 # Serene Audio — Project Changelog & Status
 
-> **Last updated:** March 25, 2026
+> **Last updated:** March 27, 2026
 > **Deployed via:** GitHub Pages
 > **Stack:** Pure HTML + CSS + Vanilla JS — no frameworks or build tools required
 
@@ -51,8 +51,14 @@ GitHub Pages serves over HTTP, so it works fine in production.
 | Checkbox + info button: fade in on hover, stay on selected | ✅ Done |
 | Info popup: full title + duration + file size + language | ✅ Done |
 | Duration tag on thumbnail (rounded to nearest minute) | ✅ Done |
-| Select All / Deselect All / Clear | ✅ Done |
-| Download Selected + Download All | ✅ Done |
+| Download via hidden iframe (no new tab opens) | ✅ Done |
+| Search bar in topbar (globe icon → expanding input) | ✅ Done |
+| Search is language-scoped (only searches active language) | ✅ Done |
+| Search clears automatically on session or language change | ✅ Done |
+| Select All / Deselect All — search-aware (visible cards only) | ✅ Done |
+| Download Selected — downloads selected programs only | ✅ Done |
+| Download All — search-aware (visible results only when searching) | ✅ Done |
+| Dynamic button labels during search (e.g. "Select Results (12)") | ✅ Done |
 | Download URLs: `drive.google.com/uc?export=download&id=` format | ✅ Done |
 | Thumbnail URLs: `lh3.googleusercontent.com/d/` format (image embed) | ✅ Done |
 | Loading state shown while data.json fetches | ✅ Done |
@@ -62,14 +68,54 @@ GitHub Pages serves over HTTP, so it works fine in production.
 | Toast notifications | ✅ Done |
 | Full developer documentation (JSDoc + inline comments) | ✅ Done |
 | Separated into index.html / style.css / script.js / data.json | ✅ Done |
+| GitHub Pages — live and deployed | ✅ Done |
 | Real logo image | ⏳ Pending — replace SVG placeholder |
+| Fill remaining sessions/languages in data.json | ⏳ Pending |
 | Firebase authentication (Option B — subscription gating) | ⏳ Planned |
 
 ---
 
 ## Changelog
 
-### v1.9 — `refactor/separate-data-and-docs` *(current)*
+### v2.1 — `fix/search-aware-selection-and-download` *(current)*
+**Commit message:** `fix: search-aware Select All, Download All, and dynamic button labels during search`
+
+Changes:
+- ✅ **`getVisibleCards()` helper added** — single source of truth that returns only cards not hidden by search; used by all selection and download functions
+- ✅ **`toggleAll()` fixed** — now operates only on visible (filtered) cards when search is active; hidden cards are completely untouched; uses `data-card-idx` to map back to program data
+- ✅ **`updateUI()` enhanced** — button labels update dynamically based on search state:
+  - No search: `Select All` / `Deselect All` / `Download All`
+  - Search active: `Select Results (N)` / `Deselect Results` / `Download Results (N)`
+- ✅ **`downloadAll()` fixed** — when search is active, downloads only the visible filtered programs; when no search, downloads everything as before
+- ✅ **`filterCards()` now calls `updateUI()`** — every keystroke immediately refreshes all button labels in sync with the visible card count
+- ✅ **`data-card-idx` attribute** added to each rendered card so `getVisibleCards()` can correctly map visible DOM elements back to their program data indices
+- ✅ **`id="dl-all-btn"`** added to Download All button in `index.html` so `updateUI()` can update its label text
+
+---
+
+### v2.0 — `feat/iframe-downloads-and-search`
+**Commit message:** `feat: iframe downloads (no new tab) + language-scoped live search in topbar`
+
+Changes:
+- ✅ **Downloads now use hidden iframes** — no new browser tab opens on download
+  - `fireIframe(url)` injects a 0×0 invisible iframe, sets its `src` to the Drive URL, removes it after 4 seconds
+  - `downloadOne(url, title)` called by each card's Download button
+  - `fire(list)` updated to call `fireIframe()` with 500ms sequential delay
+  - Card download button changed from `<a target="_blank">` to `<button onclick="downloadOne(...)">`
+- ✅ **Search bar added to topbar** — magnifying glass icon expands into an inline input field
+  - `toggleSearch()`, `expandSearch()`, `collapseSearch()`, `clearSearch()` control open/close state
+  - Icon becomes `×` when open; Escape key collapses the search bar
+  - `onSearchInput()` handles live filtering; `onSearchKeydown()` handles keyboard shortcuts
+  - `filterCards()` hides non-matching cards instantly as user types; shows "No programs found" empty state when nothing matches
+- ✅ **Search is language-scoped** — results are automatically limited to the active language because cards are already rendered for that language only
+- ✅ **Search clears on navigation** — switching session or language resets the search bar and shows all cards
+- ✅ **Title hides when search expands** on narrow screens to give input room (CSS `:has()` selector)
+- ✅ `#search-wrap`, `#search-btn`, `#search-input` added to `index.html` topbar
+- ✅ Search bar styles added to `style.css` (Section 9)
+
+---
+
+### v1.9 — `refactor/separate-data-and-docs`
 **Commit message:** `refactor: extract data.json, convert download URLs, add full developer docs`
 
 Changes:
@@ -227,8 +273,10 @@ git push
 
 ## Pending / Next Steps
 
-- [ ] Fill in placeholder programs for DE, FR, IT Weight Loss programs
+- [ ] Push v2.0 + v2.1 changes to GitHub (`script.js`, `index.html`, `style.css`)
+- [ ] Fill in placeholder programs for Weight Loss DE, FR, IT
 - [ ] Fill in real programs for Deep Relaxation and Focus & Energy sessions
 - [ ] Replace SVG placeholder logo with real brand image
 - [ ] Implement Firebase authentication (Option B — subscription gating)
-- [ ] Verify GitHub Pages deployment with all 4 files
+- [ ] Add custom domain (e.g. `sessions.yourbrand.com`)
+- [ ] Verify GitHub Pages deployment after each push
