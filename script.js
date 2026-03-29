@@ -278,7 +278,8 @@ document.addEventListener('click', e => {
 function toggleSearch(e) {
   e.stopPropagation();
   if (searchOpen) {
-    if (!searchQuery) collapseSearch();
+    /* × button: always clear and collapse, regardless of whether there's a query */
+    collapseSearch();
   } else {
     expandSearch();
   }
