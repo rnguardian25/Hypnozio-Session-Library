@@ -1,6 +1,6 @@
-# Serene Audio — Project Changelog & Status
+# Hypnozio Session Library — Project Changelog & Status
 
-> **Last updated:** March 27, 2026
+> **Last updated:** March 30, 2026
 > **Deployed via:** GitHub Pages
 > **Stack:** Pure HTML + CSS + Vanilla JS — no frameworks or build tools required
 
@@ -8,7 +8,7 @@
 
 ## Project Overview
 
-A wellness audio session download website. Users browse sessions, switch languages, select programs, and download audio files directly from Google Drive.
+A wellness audio session download website for Hypnozio. Users browse sessions, switch languages, select programs, and download audio files directly from Google Drive.
 
 ---
 
@@ -43,8 +43,9 @@ GitHub Pages serves over HTTP, so it works fine in production.
 | Mobile sidebar drawer + overlay | ✅ Done |
 | 3 sessions in sidebar | ✅ Done |
 | Weight Loss EN — 45 real programs with thumbnails, links, sizes, durations | ✅ Done |
-| All other sessions/languages — placeholder content | ⏳ Pending |
-| Language switcher (globe → popover, 4 languages) | ✅ Done |
+| Weight Loss — 17 languages with real programs | ✅ Done |
+| Deep Relaxation + Focus & Energy — placeholder content | ⏳ Pending |
+| Language switcher — 17 languages (EN, AR, PT-BR, CS, NL, FI, FR, DE, EL, HE, HU, IT, NB, PL, RO, ES, SV) | ✅ Done |
 | Card design: thumbnail + title (2-line clamp) + Download button | ✅ Done |
 | Card hover: soft sage wash (Google Drive style, no lift) | ✅ Done |
 | Card selected: full-card sage green wash, no border ring | ✅ Done |
@@ -52,15 +53,18 @@ GitHub Pages serves over HTTP, so it works fine in production.
 | Info popup: full title + duration + file size + language | ✅ Done |
 | Duration tag on thumbnail (rounded to nearest minute) | ✅ Done |
 | Download via hidden iframe (no new tab opens) | ✅ Done |
-| Search bar in topbar (globe icon → expanding input) | ✅ Done |
+| Download URLs: correct `drive.google.com/uc?export=download&id=` format | ✅ Done |
+| Thumbnail URLs: `lh3.googleusercontent.com/d/` format (image embed) | ✅ Done |
+| Search bar in topbar (magnifying glass → expanding input) | ✅ Done |
 | Search is language-scoped (only searches active language) | ✅ Done |
 | Search clears automatically on session or language change | ✅ Done |
+| Search bar expands rightward (not leftward) | ✅ Done |
+| × button always clears and collapses search bar | ✅ Done |
+| Session title stays visible when search is open (desktop/tablet) | ✅ Done |
 | Select All / Deselect All — search-aware (visible cards only) | ✅ Done |
 | Download Selected — downloads selected programs only | ✅ Done |
 | Download All — search-aware (visible results only when searching) | ✅ Done |
 | Dynamic button labels during search (e.g. "Select Results (12)") | ✅ Done |
-| Download URLs: `drive.google.com/uc?export=download&id=` format | ✅ Done |
-| Thumbnail URLs: `lh3.googleusercontent.com/d/` format (image embed) | ✅ Done |
 | Loading state shown while data.json fetches | ✅ Done |
 | Error state if data.json fails to load | ✅ Done |
 | Responsive (mobile 2-col, tablet 3-col, desktop auto-fill) | ✅ Done |
@@ -69,39 +73,59 @@ GitHub Pages serves over HTTP, so it works fine in production.
 | Full developer documentation (JSDoc + inline comments) | ✅ Done |
 | Separated into index.html / style.css / script.js / data.json | ✅ Done |
 | GitHub Pages — live and deployed | ✅ Done |
-| Real logo image | ⏳ Pending — replace SVG placeholder |
-| Fill remaining sessions/languages in data.json | ⏳ Pending |
+| Real Hypnozio logo (lh3 image URL) | ✅ Done |
+| Branding updated to "Hypnozio" / "Programs Library" | ✅ Done |
 | Firebase authentication (Option B — subscription gating) | ⏳ Planned |
+| Deep Relaxation + Focus & Energy real content | ⏳ Pending |
 
 ---
 
 ## Changelog
 
-### v2.2 — `fix/search-bar-direction-and-close-button` *(current)*
-**Commit message:** `fix: search bar expands rightward, × button always clears and collapses`
+### v2.3 — `fix/download-urls-non-english` *(current)*
+**Commit message:** `fix: correct download URLs for all non-English languages in data.json`
 
 Changes:
-- ✅ Search bar now expands toward the left (toward the title) instead of toward the grid — fixed by moving `margin-left: auto` from `.lang-wrap` to `.tb-title` in `style.css`
-- ✅ × button now always clears the input and collapses the bar regardless of whether a query is active — fixed by removing the `!searchQuery` condition in `toggleSearch()` in `script.js`
-- ✅ Session title no longer vanishes when search bar opens on desktop/tablet —
-  the `:has(.search-wrap.open)` hide rule is now wrapped in `@media (max-width: 480px)`
-  so it only fires on very small screens where there genuinely isn't room for both
+- ✅ **Root cause identified:** all non-English language `url` fields were using
+  `https://lh3.googleusercontent.com/d/FILE_ID` (the image/thumbnail viewer format)
+  instead of `https://drive.google.com/uc?export=download&id=FILE_ID` (the download format).
+  The iframe download method points at the URL directly — when it receives a thumbnail
+  URL, Google returns an image preview instead of triggering a file save dialog.
+- ✅ **Fix:** in `data.json`, all `"url"` fields for AR, PT-BR, CS, NL, FI, FR, DE, EL,
+  HE, HU, IT, NB, PL, RO, ES, and SV were updated to use the correct download format.
+  `thumb` fields correctly retain the `lh3.googleusercontent.com/d/` format.
+- ✅ **How to apply the fix** using VS Code Find & Replace (Ctrl+H, enable Regex `.*`):
+  - Find: `"url": "https://lh3\.googleusercontent\.com/d/`
+  - Replace: `"url": "https://drive.google.com/uc?export=download&id=`
+  - This targets only `url` fields and leaves all `thumb` fields untouched.
 
 ---
 
-### v2.1 — `fix/search-aware-selection-and-download` 
+### v2.2 — `fix/search-bar-direction-and-close-button`
+**Commit message:** `fix: search bar expands rightward, × button always clears and collapses`
+
+Changes:
+- ✅ Search bar now expands toward the left (correct direction) — fixed by adding
+  `margin-right: auto` to `.tb-title` and removing `margin-left: auto` from `.lang-wrap`
+- ✅ × button now always clears the input and collapses regardless of query state —
+  fixed by removing the `!searchQuery` guard in `toggleSearch()` in `script.js`
+- ✅ Session title no longer vanishes on desktop/tablet when search opens —
+  the `:has(.search-wrap.open)` rule now wrapped in `@media (max-width: 480px)` only
+- ✅ SVG placeholder logo replaced with `<img src="logo.png">` tag in `index.html`
+
+---
+
+### v2.1 — `fix/search-aware-selection-and-download`
 **Commit message:** `fix: search-aware Select All, Download All, and dynamic button labels during search`
 
 Changes:
-- ✅ **`getVisibleCards()` helper added** — single source of truth that returns only cards not hidden by search; used by all selection and download functions
-- ✅ **`toggleAll()` fixed** — now operates only on visible (filtered) cards when search is active; hidden cards are completely untouched; uses `data-card-idx` to map back to program data
-- ✅ **`updateUI()` enhanced** — button labels update dynamically based on search state:
-  - No search: `Select All` / `Deselect All` / `Download All`
-  - Search active: `Select Results (N)` / `Deselect Results` / `Download Results (N)`
-- ✅ **`downloadAll()` fixed** — when search is active, downloads only the visible filtered programs; when no search, downloads everything as before
-- ✅ **`filterCards()` now calls `updateUI()`** — every keystroke immediately refreshes all button labels in sync with the visible card count
-- ✅ **`data-card-idx` attribute** added to each rendered card so `getVisibleCards()` can correctly map visible DOM elements back to their program data indices
-- ✅ **`id="dl-all-btn"`** added to Download All button in `index.html` so `updateUI()` can update its label text
+- ✅ `getVisibleCards()` helper added — returns only cards not hidden by search filter
+- ✅ `toggleAll()` fixed — operates only on visible cards when search is active
+- ✅ `updateUI()` enhanced — labels change to "Select Results (N)" / "Download Results (N)" during search
+- ✅ `downloadAll()` fixed — downloads only visible filtered results when search is active
+- ✅ `filterCards()` now calls `updateUI()` — button labels refresh on every keystroke
+- ✅ `data-card-idx` attribute added to each card for index mapping
+- ✅ `id="dl-all-btn"` added to Download All button in `index.html`
 
 ---
 
@@ -109,21 +133,12 @@ Changes:
 **Commit message:** `feat: iframe downloads (no new tab) + language-scoped live search in topbar`
 
 Changes:
-- ✅ **Downloads now use hidden iframes** — no new browser tab opens on download
-  - `fireIframe(url)` injects a 0×0 invisible iframe, sets its `src` to the Drive URL, removes it after 4 seconds
-  - `downloadOne(url, title)` called by each card's Download button
-  - `fire(list)` updated to call `fireIframe()` with 500ms sequential delay
-  - Card download button changed from `<a target="_blank">` to `<button onclick="downloadOne(...)">`
-- ✅ **Search bar added to topbar** — magnifying glass icon expands into an inline input field
-  - `toggleSearch()`, `expandSearch()`, `collapseSearch()`, `clearSearch()` control open/close state
-  - Icon becomes `×` when open; Escape key collapses the search bar
-  - `onSearchInput()` handles live filtering; `onSearchKeydown()` handles keyboard shortcuts
-  - `filterCards()` hides non-matching cards instantly as user types; shows "No programs found" empty state when nothing matches
-- ✅ **Search is language-scoped** — results are automatically limited to the active language because cards are already rendered for that language only
-- ✅ **Search clears on navigation** — switching session or language resets the search bar and shows all cards
-- ✅ **Title hides when search expands** on narrow screens to give input room (CSS `:has()` selector)
-- ✅ `#search-wrap`, `#search-btn`, `#search-input` added to `index.html` topbar
-- ✅ Search bar styles added to `style.css` (Section 9)
+- ✅ Downloads use hidden iframes — no new browser tab opens
+- ✅ `fireIframe(url)`, `downloadOne()`, updated `fire()` in `script.js`
+- ✅ Card download button changed from `<a target="_blank">` to `<button onclick="downloadOne(...)">`
+- ✅ Search bar added — magnifying glass expands to input, Escape collapses
+- ✅ `filterCards()` hides non-matching cards live as user types
+- ✅ Language-scoped search — results limited to active language automatically
 
 ---
 
@@ -131,47 +146,22 @@ Changes:
 **Commit message:** `refactor: extract data.json, convert download URLs, add full developer docs`
 
 Changes:
-- ✅ All content data extracted from `script.js` into `data.json`
-  - `sessions` array (all 3 sessions × 4 languages × programs)
-  - `languages` array (EN, DE, FR, IT)
-  - `_comment` and `_fields` keys document the JSON structure for editors
-- ✅ All 45 Weight Loss EN `url` download links converted:
-  - **Before:** `https://lh3.googleusercontent.com/d/FILE_ID`
-  - **After:** `https://drive.google.com/uc?export=download&id=FILE_ID`
-  - `thumb` image URLs stay as `lh3.googleusercontent.com/d/` (correct for image embedding)
-- ✅ `script.js` updated to `fetch('data.json')` on load; all data removed from JS
-- ✅ Loading indicator added to `index.html` grid area (shown while data.json loads)
-- ✅ Error state added to `script.js` (friendly message if data.json fails to load)
-- ✅ Full JSDoc documentation added to `script.js`:
-  - File header with architecture overview, dependencies, and Firebase migration notes
-  - Every function documented with description, `@param`, `@type` where applicable
-  - Inline comments explain non-obvious logic (thumbnail fallback, download sequencing, etc.)
-- ✅ Section documentation added to `style.css` (numbered table of contents, section headers, inline notes)
-- ✅ HTML comments added to `index.html` (file structure, data-idx alignment, aria labels)
-- ✅ `CHANGELOG.md` updated with v1.9
+- ✅ All content data moved from `script.js` into `data.json`
+- ✅ `script.js` now loads data via `fetch('data.json')`
+- ✅ All 45 EN download URLs converted to correct `drive.google.com` format
+- ✅ Full JSDoc documentation added to `script.js`
+- ✅ Section headers and inline notes added to `style.css`
+- ✅ HTML comments added to `index.html`
 
 ---
 
 ### v1.8 — `feat/weight-loss-en-real-content`
 **Commit message:** `feat: add 45 real programs to Weight Loss EN — thumbnails, links, sizes, durations`
 
-Changes:
-- ✅ Weight Loss → English: 45 real programs replacing 5 placeholder entries
-- ✅ All 45 real thumbnails, download links, file sizes, and rounded durations
-- ✅ Sidebar badge updated from `5` → `45` for Weight Loss
-- ✅ Card renderer supports real thumbnail images with gradient fallback
-
 ---
 
 ### v1.7 — `feat/card-redesign-ux`
 **Commit message:** `feat: card redesign — clean tags, sage selected wash, accessible layout for all ages`
-
-Changes:
-- ✅ Module number and language tags removed from thumbnail
-- ✅ Duration shown as pill tag (bottom-left of thumbnail)
-- ✅ Info popup: module removed → file size added
-- ✅ Selected state: full-card sage wash, no border ring (Google Drive style)
-- ✅ Title 17px, large Download button for 30–70 age group accessibility
 
 ---
 
@@ -196,12 +186,12 @@ Changes:
 ---
 
 ### v1.2 — `redesign/wellness-theme`
-**Commit message:** `feat: Serene Audio v1.0 — wellness audio site with multilingual session downloads`
+**Commit message:** `feat: Hypnozio v1.0 — wellness audio site with multilingual session downloads`
 
 ---
 
 ### v1.1 — `feat/initial-build`
-**Commit message:** `feat: initial release — Serene Audio wellness session site`
+**Commit message:** `feat: initial release — Hypnozio Session Library`
 
 ---
 
@@ -212,17 +202,58 @@ Each program object has these fields:
 | Field   | Type   | Description | Example |
 |---|---|---|---|
 | `title` | string | Display name (card + info popup) | `"Changing outlook"` |
-| `dur`   | string | Duration (rounded to nearest minute) | `"20 mins"` |
-| `size`  | string | File size | `"24.1 MB"` |
-| `url`   | string | Google Drive download link | `"https://drive.google.com/uc?export=download&id=..."` |
-| `thumb` | string | Google Drive image URL for thumbnail | `"https://lh3.googleusercontent.com/d/..."` |
+| `dur`   | string | Duration string shown on thumbnail tag | `"20 mins"` |
+| `size`  | string | File size shown in info popup | `"24.1 MB"` |
+| `url`   | string | Google Drive direct download link | `"https://drive.google.com/uc?export=download&id=..."` |
+| `thumb` | string | Google Drive image URL for thumbnail (optional) | `"https://lh3.googleusercontent.com/d/..."` |
 
-**`thumb` is optional.** If omitted, the card uses a CSS gradient + icon fallback automatically.
+**`thumb` is optional.** If omitted, the card uses a CSS gradient + icon fallback.
 
-**URL formats:**
+**URL formats — critical distinction:**
 ```
-Download: https://drive.google.com/uc?export=download&id=FILE_ID
-Thumbnail: https://lh3.googleusercontent.com/d/FILE_ID
+✅ Download:  https://drive.google.com/uc?export=download&id=FILE_ID
+✅ Thumbnail: https://lh3.googleusercontent.com/d/FILE_ID
+❌ Wrong for download: https://lh3.googleusercontent.com/d/FILE_ID
+```
+
+---
+
+## Current Languages in data.json (Weight Loss Session)
+
+| Code | Language | Programs |
+|---|---|---|
+| `en` | English | 45 |
+| `ar` | Arabic | 10 |
+| `pt-br` | Brazilian Portuguese | 5 |
+| `cs` | Czech | 5 |
+| `nl` | Dutch | 5 |
+| `fi` | Finnish | 5 |
+| `fr` | French | 5 |
+| `de` | German | 5 |
+| `el` | Greek | 5 |
+| `he` | Hebrew | 5 |
+| `hu` | Hungarian | 5 |
+| `it` | Italian | 5 |
+| `nb` | Norwegian | 5 |
+| `pl` | Polish | 10 |
+| `ro` | Romanian | 10 |
+| `es` | Spanish | 10 |
+| `sv` | Swedish | 5 |
+
+---
+
+## How to Add Google Drive Links
+
+**Download URL format:**
+```
+https://drive.google.com/uc?export=download&id=FILE_ID
+```
+Extract `FILE_ID` from a shareable Drive link:
+`https://drive.google.com/file/d/FILE_ID_HERE/view`
+
+**Thumbnail URL format (for `thumb` field only):**
+```
+https://lh3.googleusercontent.com/d/FILE_ID
 ```
 
 ---
@@ -231,12 +262,12 @@ Thumbnail: https://lh3.googleusercontent.com/d/FILE_ID
 
 1. Add to `data.json` › `languages`:
 ```json
-{ "code": "es", "label": "Spanish" }
+{ "code": "ja", "label": "Japanese" }
 ```
-2. Add programs for each session in `data.json` › `sessions[n].programs`:
+2. Add programs under each session in `data.json` › `sessions[n].programs`:
 ```json
-"es": [
-  { "title": "...", "dur": "20 mins", "size": "— MB", "url": "#" }
+"ja": [
+  { "title": "...", "dur": "20 mins", "size": "— MB", "url": "https://drive.google.com/uc?export=download&id=..." }
 ]
 ```
 
@@ -249,14 +280,10 @@ Thumbnail: https://lh3.googleusercontent.com/d/FILE_ID
 {
   "name": "Your Session Name",
   "icon": "fa-your-icon",
-  "programs": {
-    "en": [ { "title": "...", "dur": "20 mins", "size": "— MB", "url": "#" } ],
-    "de": [], "fr": [], "it": []
-  }
+  "programs": { "en": [...] }
 }
 ```
-2. Add a sidebar item in `index.html` (inside `<nav class="sb-nav">`).
-   `data-idx` must match the session's zero-based position in `data.json › sessions[]`:
+2. Add sidebar item in `index.html` (`data-idx` = zero-based position in `sessions[]`):
 ```html
 <div class="sb-item" data-idx="3" data-tip="Your Session" onclick="selectSess(3, this)">
   <div class="sb-icon"><i class="fa-solid fa-your-icon"></i></div>
@@ -270,13 +297,9 @@ Thumbnail: https://lh3.googleusercontent.com/d/FILE_ID
 ## GitHub Deployment
 
 ```bash
-# Push all files
 git add index.html style.css script.js data.json CHANGELOG.md
-git commit -m "refactor: extract data.json, convert download URLs, add full developer docs"
+git commit -m "fix: correct download URLs for all non-English languages in data.json"
 git push
-
-# Enable GitHub Pages (one-time setup):
-# Repo → Settings → Pages → Source: Deploy from branch → main / root → Save
 ```
 
 **Live URL:** `https://YOUR_USERNAME.github.io/YOUR_REPO_NAME`
@@ -285,10 +308,9 @@ git push
 
 ## Pending / Next Steps
 
-- [ ] Push v2.0 + v2.1 changes to GitHub (`script.js`, `index.html`, `style.css`)
-- [ ] Fill in placeholder programs for Weight Loss DE, FR, IT
+- [ ] Apply URL fix in `data.json` (see v2.3 above) — replace all non-EN `lh3` download URLs with `drive.google.com` format
+- [ ] Push all changes to GitHub
 - [ ] Fill in real programs for Deep Relaxation and Focus & Energy sessions
-- [ ] Replace SVG placeholder logo with real brand image
 - [ ] Implement Firebase authentication (Option B — subscription gating)
-- [ ] Add custom domain (e.g. `sessions.yourbrand.com`)
-- [ ] Verify GitHub Pages deployment after each push
+- [ ] Add custom domain (e.g. `library.hypnozio.com`)
+- [ ] Verify all 17 language downloads work after URL fix

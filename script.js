@@ -1,8 +1,8 @@
 /**
  * =============================================================================
- * Serene Audio — script.js
+ * Hypnozio Session Library — script.js
  * =============================================================================
- * Main application logic for the Serene Audio wellness session website.
+ * Main application logic for the Hypnozio Session Library wellness session website.
  *
  * ARCHITECTURE OVERVIEW:
  *   - All content data (sessions, programs, languages) is loaded from data.json
@@ -122,7 +122,7 @@ function loadData() {
       render();
     })
     .catch(error => {
-      console.error('Serene Audio: Failed to load data.json —', error);
+      console.error('Hypnozio: Failed to load data.json —', error);
       const grid = document.getElementById('grid');
       if (grid) {
         grid.innerHTML = `

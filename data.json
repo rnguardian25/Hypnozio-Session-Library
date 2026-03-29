@@ -1,5 +1,5 @@
 {
-  "_comment": "Serene Audio — Content Data File. Edit this file to update sessions, programs, languages, links, and thumbnails. Do NOT add JavaScript comments (// or /* */) — this is a JSON file. Use '_comment' keys for notes.",
+  "_comment": "Hypnozio Session Library — Content Data File. Edit this file to update sessions, programs, languages, links, and thumbnails. Do NOT add JavaScript comments (// or /* */) — this is a JSON file. Use '_comment' keys for notes.",
   "_url_format": {
     "download": "https://drive.google.com/uc?export=download&id=FILE_ID",
     "thumbnail": "https://lh3.googleusercontent.com/d/FILE_ID"
@@ -14,9 +14,22 @@
 
   "languages": [
     { "code": "en", "label": "English"  },
-    { "code": "de", "label": "German"   },
+    { "code": "ar", "label": "Arabic"  },
+    { "code": "pt-br", "label": "Brazil"  },
+    { "code": "cs", "label": "Czech"  },
+    { "code": "nl", "label": "Dutch"  },
+    { "code": "fi", "label": "Finnish"  },
     { "code": "fr", "label": "French"   },
-    { "code": "it", "label": "Italian"  }
+    { "code": "de", "label": "German"   },
+    { "code": "el", "label": "Greek"  },
+    { "code": "he", "label": "Hebrew"  },
+    { "code": "hu", "label": "Hungarian"  },
+    { "code": "it", "label": "Italian"  },
+    { "code": "nb", "label": "Norway"  },
+    { "code": "pl", "label": "Polish"  },
+    { "code": "ro", "label": "Romanian"  },
+    { "code": "es", "label": "Spanish"  },
+    { "code": "sv", "label": "Sweden"  }
   ],
 
   "sessions": [
@@ -72,29 +85,137 @@
           { "title": "Emotional Eating",                                                                                                        "dur": "15 mins", "size": "13.7 MB", "url": "https://drive.google.com/uc?export=download&id=1B_EwzDaZDO0t8dsX7EBzZsJAitChFuKv", "thumb": "https://lh3.googleusercontent.com/d/1qvR2pfUNoJeZGhI4g3JH8k_TrQMiFrtz" },
           { "title": "Reducing stress and anxiety",                                                                                             "dur": "12 mins", "size": "11.2 MB", "url": "https://drive.google.com/uc?export=download&id=1K3NcqTvyp_gF2quOXClYOiFAq4V0WXHb", "thumb": "https://lh3.googleusercontent.com/d/19ofRRuI6ugIfqdybRleXh7IMDfkbHEsO" }
         ],
-
-        "de": [
-          { "title": "Gewichtsverlust Einführung",      "dur": "20 mins", "size": "— MB", "url": "#" },
-          { "title": "Kalorienverbrennung Boost",        "dur": "20 mins", "size": "— MB", "url": "#" },
-          { "title": "Gesunde Ernährung",                "dur": "20 mins", "size": "— MB", "url": "#" },
-          { "title": "Motivations-Booster",              "dur": "20 mins", "size": "— MB", "url": "#" },
-          { "title": "Tiefenentspannung & Abnehmen",     "dur": "20 mins", "size": "— MB", "url": "#" }
+        "ar": [
+          { "title": "Session 1-Weight loss AR_01",      "dur": "21:15 mins", "size": "29.2 MB", "url": "https://https://drive.google.com/uc?export=download&id=1DC4Xyi3JVPnFtG4OEfLxj_jFEO1PBhKM" },
+          { "title": "Session 2-Weigh loss AR_01",        "dur": "21:07 mins", "size": "29 MB", "url": "https://https://drive.google.com/uc?export=download&id=1Na0uxn14WReE8t8NUQmnP4McdjnAoNRS" },
+          { "title": "Session 3 - Weight loss 3",                "dur": " 23:23 mins", "size": "32.1 MB", "url": "https://https://drive.google.com/uc?export=download&id=1-KEh_GpgVlrAvedqXuhZvxp90nXWiK9R" },
+          { "title": "Session 4 - Changing perception of Junk food_Sugary food_and fizzy drinks",              "dur": "23:22 mins", "size": "32.1 MB", "url": "https://https://drive.google.com/uc?export=download&id=1K_D0zG2FhYkGLregRqtLFvZaeW3VNVfL" },
+          { "title": "Session 5-Eradicate Bing Eating",     "dur": "23:09 mins", "size": "31.8 MB", "url": "https://https://drive.google.com/uc?export=download&id=1ihtx89zXK6PEYNKpn5OXMuT4k8IOw1m4" },
+          { "title": "Session 6-Control My calorie Consumption",     "dur": "22:24 mins", "size": "30.8 MB", "url": "https://https://drive.google.com/uc?export=download&id=1ZucV2LrTEMPKyp2x9JTlxTL-UCGME0Hs" },
+          { "title": "Session 7-Drink more water consistently",     "dur": "21:18 mins", "size": "29.3 MB", "url": "https://https://drive.google.com/uc?export=download&id=17txIw7yWwCv-mI_L6VSj8vaFaxQd6Ujp" },
+          { "title": "Session 8-Having a healthier relationship with food",     "dur": "21:16 mins", "size": "29.2 MB", "url": "https://https://drive.google.com/uc?export=download&id=1d-EQWvKgJwymBJM7X3v_cXAufRz5OsaT" },
+          { "title": "Session 9-Keep up a healthy Diet Plan",     "dur": "19:24 mins", "size": "26.7 MB", "url": "https://https://drive.google.com/uc?export=download&id=1cfvvydQAoRrqnTf2c7htC7XYBhAiPI9Z" },
+          { "title": "Session 10-Mission statement weight loss",     "dur": "19:20 mins", "size": "26.6 MB", "url": "https://https://drive.google.com/uc?export=download&id=1Diula8zecqPcqig1XafKrp3euF9elXGp" }
         ],
-
+        "pt-br": [
+          { "title": "1 weight loss", "dur": "20:43 mins", "size": "28.5 MB", "url": "https://https://drive.google.com/uc?export=download&id=1AY3CHsVr_QATqNcWxkuFNNZoqcv86NQ9" },
+          { "title": "2 weight loss music replace",      "dur": "17:45 mins", "size": "24.4 MB", "url": "https://https://drive.google.com/uc?export=download&id=1_2uB25YywbsUMu-t9FTAgzZT-CiEA0vU" },
+          { "title": "3 weight loss",   "dur": "20:35 mins", "size": "28.3 MB", "url": "https://https://drive.google.com/uc?export=download&id=1jetcdI_CImIeZAq0K8lQtDCruBqmG3mS" },
+          { "title": "4 changing perception",     "dur": "18:38 mins", "size": "25.6 MB", "url": "https://https://drive.google.com/uc?export=download&id=1tHE6rN_sAnxf52q7kplM-81dIZDH-MPq" },
+          { "title": "5 eradicate binge eating",     "dur": "19:22 mins", "size": "26.6 MB", "url": "https://https://drive.google.com/uc?export=download&id=1asTKF3i_CCqs6Kn848AOPiIXQ0loOq2H/" }
+        ],
+        "cs": [
+          { "title": "Session 1",      "dur": "18:40 mins", "size": "29.2 MB", "url": "https://https://drive.google.com/uc?export=download&id=1fgN4XBZ2UpixaNxbH_xnmXIM3lvrzWWE" },
+          { "title": "Session 2",        "dur": "19:47 mins", "size": "29 MB", "url": "https://https://drive.google.com/uc?export=download&id=1ZMLbyNyRxO3vbkk_QvthqvifK78aVKSf" },
+          { "title": "Session 3",                "dur": "21:03 mins", "size": "32.1 MB", "url": "https://https://drive.google.com/uc?export=download&id=1XLNbqVcsDgHe3DRaIGkxMud-y72ZRxZs" },
+          { "title": "Session 4",              "dur": "19:46 mins", "size": "32.1 MB", "url": "https://https://drive.google.com/uc?export=download&id=12iNRCCSlaSZ9__FFgnMVKZMHyp2G09ms" },
+          { "title": "Session 5",     "dur": "20:05 mins", "size": "31.8 MB", "url": "https://https://drive.google.com/uc?export=download&id=1cpE-BEgChAVHWA7NcaPw8TA1oRDiU8CN" }
+        ],
+        "nl": [
+          { "title": "Session 1", "dur": "18:56 mins", "size": "16.6 MB", "url": "https://https://drive.google.com/uc?export=download&id=1BkQCcWVS_cz8w0GhedGBluxUYuU8GTOI" },
+          { "title": "Session 2",      "dur": "18:57 mins", "size": "16.7 MB", "url": "https://https://drive.google.com/uc?export=download&id=1KFNvN6-446Efp_PBlhwln1wVKaa0WySb" },
+          { "title": "Session 3",   "dur": "19:55 mins", "size": "17.3 MB", "url": "https://https://drive.google.com/uc?export=download&id=1qpM2okqcL7XqUYSJFizWyXNonnP2W4Lw" },
+          { "title": "Session 4",     "dur": "18:56 mins", "size": "16.3 MB", "url": "https://https://drive.google.com/uc?export=download&id=1NiR27JP2AhNDQCR66WStry_CdUlpsjAC" },
+          { "title": "Session 5",     "dur": "18:04 mins", "size": "16 MB", "url": "https://https://drive.google.com/uc?export=download&id=1hVhq6065RbH87FICIa8rMukLbUx_lfDr" }
+        ],
+        "fi": [
+          { "title": "Session 1", "dur": "21:48 mins", "size": "26.6 MB", "url": "https://https://drive.google.com/uc?export=download&id=1haUFDfhK43Yr2r30bpevTMiobxegBQXF" },
+          { "title": "Session 2",      "dur": "19:49 mins", "size": "23.8 MB", "url": "https://https://drive.google.com/uc?export=download&id=1sCUZRkEIbbJmN9GNe_SYP1I-_OFNQiJb" },
+          { "title": "Session 3",   "dur": "21:46 mins", "size": "23.5 MB", "url": "https://https://drive.google.com/uc?export=download&id=1f6AQGYULFrY5X7UFqE-UeFEzX8tAOh_v" },
+          { "title": "Session 4",     "dur": "20:41 mins", "size": "23.2 MB", "url": "https://https://drive.google.com/uc?export=download&id=1SzUnwYV_UoJFZovF3w7Jf7Oh9D22R5-J" },
+          { "title": "Session 5",     "dur": "19:49 mins", "size": "25.1 MB", "url": "https://https://drive.google.com/uc?export=download&id=1xzNzO-8bWeDr7hwtGx6GpRVOJ3qhtKnu" }
+        ],
         "fr": [
-          { "title": "Introduction à la perte de poids", "dur": "20 mins", "size": "— MB", "url": "#" },
-          { "title": "Brûleur de graisses intensif",      "dur": "20 mins", "size": "— MB", "url": "#" },
-          { "title": "Alimentation saine & consciente",   "dur": "20 mins", "size": "— MB", "url": "#" },
-          { "title": "Motivation & confiance en soi",     "dur": "20 mins", "size": "— MB", "url": "#" },
-          { "title": "Relaxation profonde & minceur",     "dur": "20 mins", "size": "— MB", "url": "#" }
+          { "title": "Contrôle de ma consommation calorique", "dur": "20:20 mins", "size": "18.6 MB", "url": "https://https://drive.google.com/uc?export=download&id=1g_HN8jqS1NpMvJnDInkXSBc-L-qOvre9" },
+          { "title": "Boire plus d_eau de manière constante",      "dur": "20 mins", "size": "18.3 MB", "url": "https://https://drive.google.com/uc?export=download&id=1bPvuuBOBFVrT771g6yRze4imzEyafPqp" },
+          { "title": "Établir une relation plus saine avec la nourriture",   "dur": "20 mins", "size": "18.3 MB", "url": "https://https://drive.google.com/uc?export=download&id=1QR9FUd1_KO8fMFdTXtI2Y7da4agk_1CA" },
+          { "title": "Maintenir un plan alimentaire sain",     "dur": "19:42 mins", "size": "18 MB", "url": "https://https://drive.google.com/uc?export=download&id=1Ojydlxz-GuLjvriUt_3DyCDc-db2AEqc" },
+          { "title": "Déclaration de mission  perte de poids",     "dur": "21:14 mins", "size": "19.4 MB", "url": "https://https://drive.google.com/uc?export=download&id=1jAjsKxndo6cOU8KTwQN2ADBXDriqJiHs" }
         ],
-
+        "de": [
+          { "title": "Perspektiven ändern",      "dur": "23:56 mins", "size": "54.8 MB", "url": "https://https://drive.google.com/uc?export=download&id=11OFKh-UQwsCOCqyHSOaHJFkWeyO3yWer" },
+          { "title": "Visualisierung neuer Gewohnheiten",        "dur": "19:32 mins", "size": "44.7 MB", "url": "https://https://drive.google.com/uc?export=download&id=173mIWNZsipdd3n9Cxso7i87CUz4NDfAZ" },
+          { "title": "Neue Gewohnheiten stärken",                "dur": "19:58 mins", "size": "45.7 MB", "url": "https://https://drive.google.com/uc?export=download&id=1QIMS_qPheuk4PM4xJMvIBk76RhMD1fU3" },
+          { "title": "Veränderte Wahrnehmung von Junkfood, zuckerhaltigem Essen und kohlensäurehaltigen Getränken",              "dur": "18:46 mins", "size": "43 MB", "url": "https://https://drive.google.com/uc?export=download&id=1BzM7T54gLu1jMiwaXHAN-ZaZxP8YwdoE" },
+          { "title": "Essattacken beseitigen",     "dur": "20:05 mins", "size": "46 MB", "url": "https://https://drive.google.com/uc?export=download&id=1NqxeMHhpHavagyTS5AvhxbQuBB9DNiYt" }
+        ],
+        "el": [
+          { "title": "Session 1", "dur": "18:28 mins", "size": "23.3 MB", "url": "https://https://drive.google.com/uc?export=download&id=1wq7j6e51MSIL1wztrujmNRTp-yCOYKOH" },
+          { "title": "Session 2",      "dur": "19 mins", "size": "22.7 MB", "url": "https://https://drive.google.com/uc?export=download&id=1ZqH82SgkXoqPzCZbU2oBBvQxN7uPI6Z9" },
+          { "title": "Session 3",   "dur": "20:41 mins", "size": "21.4 MB", "url": "https://https://drive.google.com/uc?export=download&id=1ctS2g72KwF5gqzSMVfS6ZGM860uEsDYx" },
+          { "title": "Session 4",     "dur": "18:35 mins", "size": "19.7 MB", "url": "https://https://drive.google.com/uc?export=download&id=1F5N5UeugPcGr9-JVrBMFO0tlfkBvIzFx" },
+          { "title": "Session 5",     "dur": "19:05 mins", "size": "20.2 MB", "url": "https://https://drive.google.com/uc?export=download&id=1YPntjY1utSxZWlxINmIIkqTdpg1c64Pe" }
+        ],
+        "he": [
+          { "title": "S01 Weight loss HE", "dur": "20 mins", "size": "20 MB", "url": "https://https://drive.google.com/uc?export=download&id=1Q2LN2umFg3F8wArxTL6E7ShijDKLYsE_" },
+          { "title": "S02 Weight loss HE",      "dur": "20 mins", "size": "20.1 MB", "url": "https://https://drive.google.com/uc?export=download&id=1PO99rd10VDIpi0AWNpZtyNwSv6Xxt_rF" },
+          { "title": "S03 Weight loss HE",   "dur": "20 mins", "size": "17 MB", "url": "https://https://drive.google.com/uc?export=download&id=14hJLqtCpUjNhq689QONT29gjFFSDIh3m" },
+          { "title": "S04 Weight loss HE",     "dur": "20 mins", "size": "16.5 MB", "url": "https://https://drive.google.com/uc?export=download&id=11pP7q-yWBgCU3VS2LTdAX6pAAD-v65Px" },
+          { "title": "S05 Weight loss HE",     "dur": "20 mins", "size": "16.3 MB", "url": "https://https://drive.google.com/uc?export=download&id=17dWp0tSkFiRL45Pqi9Qe1VunLz-O8wHs" }
+        ],
+        "hu": [
+          { "title": "hypnosis 1 ", "dur": "19 mins", "size": "17.4 MB", "url": "https://https://drive.google.com/uc?export=download&id=1dXZsNOJT_k57UMKoIZWjarG83WqVZFlm" },
+          { "title": "hypnosis 2",      "dur": "19:25 mins", "size": "17.8 MB", "url": "https://https://drive.google.com/uc?export=download&id=1YPoOGXH1ujdO47VegwL-lfbItW37H4Kt" },
+          { "title": "hypnosis 3",   "dur": "20:10 mins", "size": "18.5 MB", "url": "https://https://drive.google.com/uc?export=download&id=1HTzjmeux26M5e6zYeGL_5iooWbD-8azf" },
+          { "title": "hypnosis 4",     "dur": "19 mins", "size": "17.4 MB", "url": "https://https://drive.google.com/uc?export=download&id=1nrCK1GQAxQIZsck0spKueRiIznIe6uRO" },
+          { "title": "hypnosis 5",     "dur": "19:40 mins", "size": "18 MB", "url": "https://https://drive.google.com/uc?export=download&id=1NeEtvbhU68ujOQMUgI45b_pgA0IOqNS3" }
+        ],
         "it": [
-          { "title": "Introduzione alla perdita di peso", "dur": "20 mins", "size": "— MB", "url": "#" },
-          { "title": "Bruciagrassi intenso",              "dur": "20 mins", "size": "— MB", "url": "#" },
-          { "title": "Alimentazione consapevole",         "dur": "20 mins", "size": "— MB", "url": "#" },
-          { "title": "Motivazione & fiducia",             "dur": "20 mins", "size": "— MB", "url": "#" },
-          { "title": "Rilassamento profondo & dimagrire", "dur": "20 mins", "size": "— MB", "url": "#" }
+          { "title": "Session 1", "dur": "19:09 mins", "size": "26.3 MB", "url": "https://https://drive.google.com/uc?export=download&id=1tZJAJAVXD54QejHKPQp7ah60G_BJdG3r" },
+          { "title": "Session 2",      "dur": "18:48 mins", "size": "25.8 MB", "url": "https://https://drive.google.com/uc?export=download&id=1YMyK7D88FKAl0ozlrVdWFtkP7cvXJKSM" },
+          { "title": "Session 3",   "dur": "20:48 mins", "size": "28.6 MB", "url": "https://https://drive.google.com/uc?export=download&id=16jKBDaDKcuL9c3gWPjStlug-WIn1TpdZ" },
+          { "title": "Session 4",     "dur": "19:56 mins", "size": "27.4 MB", "url": "https://https://drive.google.com/uc?export=download&id=1_hSgUmxy7i1HjYrhmM--olSMMJOnR2QY" },
+          { "title": "",     "dur": "20 mins", "size": "27.5 MB", "url": "https://https://drive.google.com/uc?export=download&id=1XOgEDUwS1rB6afOM6PsN4R4J5rFgf25N" }
+        ],
+        "nb": [
+          { "title": "Session 1", "dur": "18:46 mins", "size": "34.4 MB", "url": "https://https://drive.google.com/uc?export=download&id=1Mw9T-RhyfHyuXLz07oP1TgFF15bgkD29" },
+          { "title": "Session 2",      "dur": "18:16 mins", "size": "33.5 MB", "url": "https://https://drive.google.com/uc?export=download&id=120SW7xcqdtT-J_8b6L75A3y2Px0A0Jkg" },
+          { "title": "Session 3",   "dur": "18:09 mins", "size": "33.2 MB", "url": "https://https://drive.google.com/uc?export=download&id=1_C26j5zqN6lMsvIl1cFz-VP7TnzpkX2s" },
+          { "title": "Session 4",     "dur": "18:11 mins", "size": "33.3 MB", "url": "https://https://drive.google.com/uc?export=download&id=12bdobYVINYvgNQPRVIqxZhYRVVbk30h9" },
+          { "title": "Session 5",     "dur": "18:25 mins", "size": "33.7 MB", "url": "https://https://drive.google.com/uc?export=download&id=1xKtefePyM2b3FpodrKbtg6VItqgDKhd5" }
+        ],
+        "pl": [
+          { "title": "Session 1", "dur": "19:59 mins", "size": "18.3 MB", "url": "https://https://drive.google.com/uc?export=download&id=1ViC3CbuY0BGChyg68Uolen61hFTD4KIj" },
+          { "title": "Session 2",      "dur": "27:12 mins", "size": "24.9 MB", "url": "https://https://drive.google.com/uc?export=download&id=1iw22yQV-KAmoNyM2qxaqsTDOU8VjcfSz" },
+          { "title": "Session 3",   "dur": "26:05 mins", "size": "23.9 MB", "url": "https://https://drive.google.com/uc?export=download&id=1IkBDNffhaoUFSKTgea2tXMyqDiSEFbuC" },
+          { "title": "Session 4",     "dur": "21:18 mins", "size": "19.5 MB", "url": "https://https://drive.google.com/uc?export=download&id=1hpGm_Ec0Hyg5oszfQxHwJnSI5UIXZ6P0" },
+          { "title": "Session 5",     "dur": "21:03 mins", "size": "19.3 MB", "url": "https://https://drive.google.com/uc?export=download&id=1YlkHM0LV4nuRtBPdKDr6_LUVhxHfAMQt" },
+          { "title": "Session 6", "dur": "19:23 mins", "size": "17.8 MB", "url": "https://https://drive.google.com/uc?export=download&id=1xbqXFmOAlbTXsw-i1CD6hkDhGYxmfCYJ" },
+          { "title": "Session 7",      "dur": "20:14 mins", "size": "18.5 MB", "url": "https://https://drive.google.com/uc?export=download&id=13H1IiSH76-NmpQlkhzl2EX-smwuWRpZB" },
+          { "title": "Session 8",   "dur": "23:27 mins", "size": "21.5 MB", "url": "https://https://drive.google.com/uc?export=download&id=1rvjaeCisPQQWP4lcJDBECvyLo02paUHJ" },
+          { "title": "Session 9",     "dur": "25 mins", "size": "22.9 MB", "url": "https://https://drive.google.com/uc?export=download&id=1cd8FX22tXXpmkEDRnkNQ8QeDT9xVGRSC" },
+          { "title": "Session 10",     "dur": "21:26 mins", "size": "19.6 MB", "url": "https://https://drive.google.com/uc?export=download&id=1sPcGvtuLEyAvkzz9sAAfrOveY8G6nIJe" }
+        ],
+        "ro": [
+          { "title": "Introducere, Vindecare Emotionala Partea 1 - Camera Gri", "dur": "19:39 mins", "size": "25.3 MB", "url": "https://https://drive.google.com/uc?export=download&id=1HvvLRwwpnYNCLEqPTfrP7MhETE3ik4dS" },
+          { "title": "Proiectarea Viitorului - Teatrul",      "dur": "22:25 mins", "size": "20.5 MB", "url": "https://https://drive.google.com/uc?export=download&id=12SZiLLiYzu1gZliIOiXnv3W7wqgoxIm0" },
+          { "title": "Inteligenta emotionala, Gestiunea trăirilor - Oglinzile",   "dur": "20:51 mins", "size": "19 MB", "url": "https://https://drive.google.com/uc?export=download&id=1HodJSZvCH-Olc1sNeTadzTLtueJbq7cw" },
+          { "title": "Ancorarea stărilor pozitive în corp prin regresie - Holul ",     "dur": "21:19 mins", "size": "19.5 MB", "url": "https://https://drive.google.com/uc?export=download&id=1cpwYDW9ZOaw44Nwvq_EPX3NmyzStxb6i" },
+          { "title": "Kit-ul de prim ajutor emotional pentru viata cotidiana - Oglinda, Cufărul și Bula de săpun",     "dur": "21:46 mins", "size": "19.9 MB", "url": "https://https://drive.google.com/uc?export=download&id=1rrdLs92a-5rnXTXMHW_FV4Szm3F2rmOa" },
+          { "title": "Scapă de comportamentele nedorite, nesănătoase - Scenele", "dur": "24:48 mins", "size": "22.6 MB", "url": "https://https://drive.google.com/uc?export=download&id=1ZjGhnKBQF44VAfCgwm0wKbjM1-GFBKl3" },
+          { "title": "Parinții și Tribul - Sesiune de curățare transgenerațională",      "dur": "22:44 mins", "size": "20.8 MB", "url": "https://https://drive.google.com/uc?export=download&id=177zNJRxoS0t0ycDvQpnpm5qEqUeED1_t" },
+          { "title": "Timpul pentru o decizie! - Râul",   "dur": "15:50 mins", "size": "14.5 MB", "url": "https://https://drive.google.com/uc?export=download&id=1ZVukqeT-o9HXizcb4chbzj2cQGgW68Ut" },
+          { "title": "Decizia e motorul, iar emoțiile sunt benzina - Utilizarea Productivă a furiei",     "dur": "21:09 mins", "size": "19.3 MB", "url": "https://https://drive.google.com/uc?export=download&id=1MBMgg56FdkgadtbnFGBHTQY4HPrfc1Dx" },
+          { "title": "Bucuria și reconectarea cu copilul interior",     "dur": "18:21 mins", "size": "16.8 MB", "url": "https://https://drive.google.com/uc?export=download&id=1e-NuSJmGmKLVeB4i9WotSM_Qp02ij3Iv" }
+        ],
+         "es": [
+          { "title": "Cambio de hábitos", "dur": "19:09 mins", "size": "35 MB", "url": "https://https://drive.google.com/uc?export=download&id=1zgGI01sJ4WZDSmvNI81LAC4y8bvptgZI" },
+          { "title": "El espejo",      "dur": "16:21 mins", "size": "29.9 MB", "url": "https://https://drive.google.com/uc?export=download&id=1nVxatCVIcILzr4F6I_14JkJpbKOpNmZH" },
+          { "title": "El arte de comer",   "dur": "15:18 mins", "size": "28 MB", "url": "https://https://drive.google.com/uc?export=download&id=1ypJtXm-nZMR0DUur7oAYQCFK8L0Re7YO" },
+          { "title": "Reconociendo las señales de tu cuerpo",     "dur": "16:38 minss", "size": "30.4 MB", "url": "https://https://drive.google.com/uc?export=download&id=1FCWBQPBJIYk4TiLvbCJM6-uSrHWr5ggy" },
+          { "title": "Instalando nuevos programas en tu mente subconsciente", "dur": "18:09 mins", "size": "33.2 MB", "url": "https://https://drive.google.com/uc?export=download&id=1P7XZVSPkXy9yauRikUvY-Sv2cXBM_Nyw" },
+          { "title": "Alimentos saludables para ti",      "dur": "18:47 mins", "size": "34.4 MB", "url": "https://https://drive.google.com/uc?export=download&id=1rpYWb3oRaLcFHmTiDfDbLqGq4cJYqlpL" },
+          { "title": "Cambiando viejos hábitos",   "dur": "17:58 mins", "size": "32.9 MB", "url": "https://https://drive.google.com/uc?export=download&id=1250Lx2oK3BaIRVV5iYhjegGspEH58kOD" },
+          { "title": "Ahora tú decides qué quieres comer",     "dur": "18 mins", "size": "33.4 MB", "url": "https://https://drive.google.com/uc?export=download&id=1pWii-iQoPgy9HhpbPBqGS-XsHxUwx3OR" },
+          { "title": "Nueva forma de pensar en torno a los alimentos",     "dur": "17:32 mins", "size": "32.1 MB", "url": "https://https://drive.google.com/uc?export=download&id=1NCvtZhRD783m81I3xE3yamX9HhG4H_Gf" },
+          { "title": "Película mental",     "dur": "18:08 mins", "size": "33.2 MB", "url": "https://https://drive.google.com/uc?export=download&id=1fH7qnbxZyWJm0Ui3BhV8-0HpRVU56_SI/" }
+        ],
+        "sv": [
+          { "title": "Meditation 1_Swedish", "dur": "19:02 mins", "size": "26.1 MB", "url": "https://https://drive.google.com/uc?export=download&id=1OVYR_9RswrIeTHYvmPTGFPceT3jCEs3h" },
+          { "title": "Meditation 2 _Swedish",      "dur": "18:36 mins", "size": "25.5 MB", "url": "https://https://drive.google.com/uc?export=download&id=1cwZbiNXeeHlDQ2RfV3bLR-SwcFrsnHk9" },
+          { "title": "Meditation 3 _ Swedish",   "dur": "20:19 mins", "size": "27.9 MB", "url": "https://https://drive.google.com/uc?export=download&id=1sStrHBeo3xwIiCvMkPG2n9TbiWsLMZ2_" },
+          { "title": "Meditation 4_Swedish",     "dur": "18:44 mins", "size": "25.7 MB", "url": "https://https://drive.google.com/uc?export=download&id=1YUq9W5FUhQhw8gsi-Qj0TxZki_f180M-" },
+          { "title": "Meditation 5_Swedish",     "dur": "18:25 mins", "size": "25.3 MB", "url": "https://https://drive.google.com/uc?export=download&id=1N1DQ2KT3sLEJaPnbEla5HshP42BP6FGE" }
         ]
       }
     },
