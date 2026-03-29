@@ -77,7 +77,19 @@ GitHub Pages serves over HTTP, so it works fine in production.
 
 ## Changelog
 
-### v2.1 — `fix/search-aware-selection-and-download` *(current)*
+### v2.2 — `fix/search-bar-direction-and-close-button` *(current)*
+**Commit message:** `fix: search bar expands rightward, × button always clears and collapses`
+
+Changes:
+- ✅ Search bar now expands toward the left (toward the title) instead of toward the grid — fixed by moving `margin-left: auto` from `.lang-wrap` to `.tb-title` in `style.css`
+- ✅ × button now always clears the input and collapses the bar regardless of whether a query is active — fixed by removing the `!searchQuery` condition in `toggleSearch()` in `script.js`
+- ✅ Session title no longer vanishes when search bar opens on desktop/tablet —
+  the `:has(.search-wrap.open)` hide rule is now wrapped in `@media (max-width: 480px)`
+  so it only fires on very small screens where there genuinely isn't room for both
+
+---
+
+### v2.1 — `fix/search-aware-selection-and-download` 
 **Commit message:** `fix: search-aware Select All, Download All, and dynamic button labels during search`
 
 Changes:
