@@ -223,71 +223,13 @@
     {
       "name": "Deep Relaxation Session",
       "icon": "fa-cloud-moon",
-      "programs": {
-        "en": [
-          { "title": "Relaxation Fundamentals",         "dur": "20 mins", "size": "— MB", "url": "#" },
-          { "title": "Deep Sleep & Recovery",            "dur": "35 mins", "size": "— MB", "url": "#" },
-          { "title": "Breathing Exercises for Calm",     "dur": "15 mins", "size": "— MB", "url": "#" },
-          { "title": "Releasing Stress & Letting Go",    "dur": "28 mins", "size": "— MB", "url": "#" },
-          { "title": "Inner Peace & Stillness",          "dur": "25 mins", "size": "— MB", "url": "#" }
-        ],
-        "de": [
-          { "title": "Tiefenentspannung Grundlagen",     "dur": "20 mins", "size": "— MB", "url": "#" },
-          { "title": "Schlaf & Erholung",                "dur": "35 mins", "size": "— MB", "url": "#" },
-          { "title": "Atemübungen für innere Ruhe",       "dur": "15 mins", "size": "— MB", "url": "#" },
-          { "title": "Stress abbauen & loslassen",        "dur": "28 mins", "size": "— MB", "url": "#" },
-          { "title": "Innerer Frieden",                  "dur": "25 mins", "size": "— MB", "url": "#" }
-        ],
-        "fr": [
-          { "title": "Fondamentaux de la relaxation",    "dur": "20 mins", "size": "— MB", "url": "#" },
-          { "title": "Sommeil profond & réparateur",      "dur": "35 mins", "size": "— MB", "url": "#" },
-          { "title": "Exercices de respiration douce",    "dur": "15 mins", "size": "— MB", "url": "#" },
-          { "title": "Libérer le stress & lâcher prise", "dur": "28 mins", "size": "— MB", "url": "#" },
-          { "title": "Paix intérieure profonde",          "dur": "25 mins", "size": "— MB", "url": "#" }
-        ],
-        "it": [
-          { "title": "Fondamenti del rilassamento",      "dur": "20 mins", "size": "— MB", "url": "#" },
-          { "title": "Sonno profondo & ristoratore",      "dur": "35 mins", "size": "— MB", "url": "#" },
-          { "title": "Esercizi di respirazione dolce",    "dur": "15 mins", "size": "— MB", "url": "#" },
-          { "title": "Liberarsi dallo stress",            "dur": "28 mins", "size": "— MB", "url": "#" },
-          { "title": "Pace interiore profonda",           "dur": "25 mins", "size": "— MB", "url": "#" }
-        ]
-      }
+      "programs": {}
     },
 
     {
       "name": "Focus & Energy Session",
       "icon": "fa-seedling",
-      "programs": {
-        "en": [
-          { "title": "Concentration & Mental Clarity",   "dur": "18 mins", "size": "— MB", "url": "#" },
-          { "title": "Morning Energy Activation",        "dur": "12 mins", "size": "— MB", "url": "#" },
-          { "title": "Productivity Flow State",          "dur": "22 mins", "size": "— MB", "url": "#" },
-          { "title": "Building Mental Strength",         "dur": "26 mins", "size": "— MB", "url": "#" },
-          { "title": "Evening Regeneration",             "dur": "20 mins", "size": "— MB", "url": "#" }
-        ],
-        "de": [
-          { "title": "Konzentration & geistige Klarheit","dur": "18 mins", "size": "— MB", "url": "#" },
-          { "title": "Morgenenergie Aktivierung",         "dur": "12 mins", "size": "— MB", "url": "#" },
-          { "title": "Produktivitäts-Flow",               "dur": "22 mins", "size": "— MB", "url": "#" },
-          { "title": "Mentale Stärke aufbauen",           "dur": "26 mins", "size": "— MB", "url": "#" },
-          { "title": "Abendliche Regeneration",           "dur": "20 mins", "size": "— MB", "url": "#" }
-        ],
-        "fr": [
-          { "title": "Concentration & clarté mentale",   "dur": "18 mins", "size": "— MB", "url": "#" },
-          { "title": "Activation énergétique du matin",  "dur": "12 mins", "size": "— MB", "url": "#" },
-          { "title": "Flow de productivité",             "dur": "22 mins", "size": "— MB", "url": "#" },
-          { "title": "Construire la force mentale",      "dur": "26 mins", "size": "— MB", "url": "#" },
-          { "title": "Régénération du soir",             "dur": "20 mins", "size": "— MB", "url": "#" }
-        ],
-        "it": [
-          { "title": "Concentrazione & chiarezza mentale","dur": "18 mins", "size": "— MB", "url": "#" },
-          { "title": "Attivazione energetica mattutina", "dur": "12 mins", "size": "— MB", "url": "#" },
-          { "title": "Flusso di produttività",           "dur": "22 mins", "size": "— MB", "url": "#" },
-          { "title": "Costruire la forza mentale",       "dur": "26 mins", "size": "— MB", "url": "#" },
-          { "title": "Rigenerazione serale",             "dur": "20 mins", "size": "— MB", "url": "#" }
-        ]
-      }
+      "programs": {}
     }
   ]
 }

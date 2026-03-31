@@ -1,6 +1,6 @@
 # Hypnozio Session Library — Project Changelog & Status
 
-> **Last updated:** March 30, 2026
+> **Last updated:** March 31, 2026
 > **Deployed via:** GitHub Pages
 > **Stack:** Pure HTML + CSS + Vanilla JS — no frameworks or build tools required
 
@@ -44,7 +44,10 @@ GitHub Pages serves over HTTP, so it works fine in production.
 | 3 sessions in sidebar | ✅ Done |
 | Weight Loss EN — 45 real programs with thumbnails, links, sizes, durations | ✅ Done |
 | Weight Loss — 17 languages with real programs | ✅ Done |
-| Deep Relaxation + Focus & Energy — placeholder content | ⏳ Pending |
+| Deep Relaxation + Focus & Energy — marked Coming Soon in sidebar | ✅ Done |
+| Deep Relaxation + Focus & Energy — placeholder program data removed from data.json | ✅ Done |
+| Library section (All Programs, Saved) — removed from sidebar | ✅ Done |
+| Settings — replaced with dynamic copyright footer in sidebar | ✅ Done |
 | Language switcher — 17 languages (EN, AR, PT-BR, CS, NL, FI, FR, DE, EL, HE, HU, IT, NB, PL, RO, ES, SV) | ✅ Done |
 | Card design: thumbnail + title (2-line clamp) + Download button | ✅ Done |
 | Card hover: soft sage wash (Google Drive style, no lift) | ✅ Done |
@@ -82,7 +85,21 @@ GitHub Pages serves over HTTP, so it works fine in production.
 
 ## Changelog
 
-### v2.3 — `fix/download-urls-non-english` *(current)*
+### v2.4 — `feat/sidebar-cleanup-and-copyright` *(current)*
+**Commit message:** `feat: coming soon sessions, remove library nav, add copyright footer`
+
+Changes:
+- ✅ **Deep Relaxation + Focus & Energy → Coming Soon** — `onclick` changed from `selectSess()` to `toast('Coming soon — stay tuned!', 'info')`; `data-idx` attribute removed; badge changed from `5` → `Soon`; sessions can no longer be accidentally navigated to
+- ✅ **Library section removed** — "Library" label, "All Programs", and "Saved" nav items removed from `index.html` sidebar to reduce clutter
+- ✅ **Settings replaced with copyright footer** — `.sb-item` Settings div replaced with `.sb-copyright` in `index.html`; displays `® [YEAR] Hypnozio. All rights reserved.`
+- ✅ **Year is dynamic** — `new Date().getFullYear()` injected into `#copyright-year` span via inline `<script>` before `script.js` loads; updates automatically every January 1st with no code changes needed
+- ✅ **Copyright hidden gracefully in mini mode** — when sidebar collapses to icon-only, the text is hidden and only the ® icon is centred; controlled by `#sidebar.mini .sb-copyright` CSS rules
+- ✅ **Dead program data removed from data.json** — Deep Relaxation and Focus & Energy program arrays stripped down to `"programs": {}`; removes ~60 lines of placeholder content that was never shown to users
+- ✅ **`.sb-copyright` CSS added to `style.css`** — styled to match sidebar muted text colour, 11px font, 0.55 opacity, consistent padding with the old footer item
+
+---
+
+### v2.3 — `fix/download-urls-non-english`
 **Commit message:** `fix: correct download URLs for all non-English languages in data.json`
 
 Changes:
@@ -308,9 +325,8 @@ git push
 
 ## Pending / Next Steps
 
-- [ ] Apply URL fix in `data.json` (see v2.3 above) — replace all non-EN `lh3` download URLs with `drive.google.com` format
-- [ ] Push all changes to GitHub
-- [ ] Fill in real programs for Deep Relaxation and Focus & Energy sessions
+- [ ] Push all changes to GitHub (`index.html`, `style.css`, `data.json`, `CHANGELOG.md`)
+- [ ] Fill in real programs for Deep Relaxation and Focus & Energy sessions (when ready)
 - [ ] Implement Firebase authentication (Option B — subscription gating)
 - [ ] Add custom domain (e.g. `library.hypnozio.com`)
-- [ ] Verify all 17 language downloads work after URL fix
+- [ ] Verify all 17 language downloads work on live site

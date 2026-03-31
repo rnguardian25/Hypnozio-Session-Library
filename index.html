@@ -1,206 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!--
-    ==========================================================================
-    Hypnozio Session Library — index.html
-    ==========================================================================
-    FILE STRUCTURE:
-      index.html   ← You are here (page structure + sidebar nav)
-      style.css    ← All visual styles and responsive breakpoints
-      script.js    ← All application logic (data loading, rendering, downloads)
-      data.json    ← All session/program content, links, and language data
-
-    SIDEBAR NAV — IMPORTANT:
-      Each session nav item has a data-idx attribute that must match the
-      zero-based index of that session in data.json › sessions[].
-        data-idx="0" → sessions[0] (Weight Loss)
-        data-idx="1" → sessions[1] (Deep Relaxation)
-        data-idx="2" → sessions[2] (Focus & Energy)
-      When adding a new session, add it to data.json AND add a new
-      .sb-item here with the correct data-idx.
-
-    SEARCH BAR:
-      The search icon (#search-btn) in the topbar toggles the search input
-      (#search-input) open/closed. Search is handled entirely by script.js —
-      see toggleSearch(), expandSearch(), collapseSearch(), filterCards().
-    ==========================================================================
-  -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hypnozio Library</title>
-
-  <!-- Google Fonts: Cormorant Garamond (headings) + Jost (UI body text) -->
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
-
-  <!-- Font Awesome 6.5 — icon library -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
-
-  <!-- Application styles -->
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
-  <!-- Mobile overlay: dark backdrop behind the sidebar drawer -->
   <div id="overlay" onclick="closeMobile()"></div>
-
-
-  <!-- ═══════════════════════════════════════════════════════════════
-       SIDEBAR
-       Fixed left panel. Collapses to icon-only (mini) on desktop.
-       Becomes a slide-in drawer on mobile (≤820px).
-       ═══════════════════════════════════════════════════════════════ -->
   <aside id="sidebar">
-
-    <!-- Toggle tab: always visible on right edge, even when minimised -->
     <div id="sb-tab" onclick="toggleSidebar()" title="Toggle sidebar">
       <i class="fa-solid fa-chevron-left" id="tab-icon"></i>
     </div>
-
     <div class="sb-inner">
-
-      <!-- Logo header -->
       <div class="sb-header">
         <div class="logo-mark">
-          <!-- Placeholder leaf SVG — replace with real brand logo -->
-          <img src="https://lh3.googleusercontent.com/d/1bSi9ozR19haN0Q4CFzImYzXjShiNUOez" alt="Hynpnozio logo" width="24" height="24"
-               style="object-fit:contain;display:block;" />
+          <img src="https://lh3.googleusercontent.com/d/1bSi9ozR19haN0Q4CFzImYzXjShiNUOez" alt="Hypnozio logo" width="24" height="24" style="object-fit:contain;display:block;" />
         </div>
         <div class="logo-words">
           <span class="logo-name">Hypnozio</span>
           <span class="logo-tag">Programs Library</span>
         </div>
       </div>
-
-      <!-- Navigation -->
       <nav class="sb-nav" aria-label="Session navigation">
-
         <div class="sb-label">Sessions</div>
 
-        <!-- data-idx must match zero-based position in data.json › sessions[] -->
+        <!-- Active session — Weight Loss -->
         <div class="sb-item active" data-idx="0" data-tip="Weight Loss" onclick="selectSess(0, this)">
           <div class="sb-icon"><i class="fa-solid fa-fire-flame-curved"></i></div>
           <span class="sb-text">Weight Loss Session</span>
           <span class="sb-badge">45</span>
         </div>
 
-        <div class="sb-item" data-idx="1" data-tip="Deep Relaxation" onclick="selectSess(1, this)">
+        <!-- Coming soon — not yet linked to selectSess() -->
+        <div class="sb-item" data-tip="Coming Soon" onclick="toast('Coming soon — stay tuned!', 'info')">
           <div class="sb-icon"><i class="fa-solid fa-cloud-moon"></i></div>
           <span class="sb-text">Deep Relaxation Session</span>
-          <span class="sb-badge">5</span>
+          <span class="sb-badge">Soon</span>
         </div>
 
-        <div class="sb-item" data-idx="2" data-tip="Focus &amp; Energy" onclick="selectSess(2, this)">
+        <div class="sb-item" data-tip="Coming Soon" onclick="toast('Coming soon — stay tuned!', 'info')">
           <div class="sb-icon"><i class="fa-solid fa-seedling"></i></div>
           <span class="sb-text">Focus &amp; Energy Session</span>
-          <span class="sb-badge">5</span>
-        </div>
-
-        <div class="sb-label" style="margin-top:12px">Library</div>
-
-        <div class="sb-item" data-tip="All Programs" onclick="toast('Feature coming soon', 'info')">
-          <div class="sb-icon"><i class="fa-solid fa-grip"></i></div>
-          <span class="sb-text">All Programs</span>
-        </div>
-
-        <div class="sb-item" data-tip="Saved" onclick="toast('Feature coming soon', 'info')">
-          <div class="sb-icon"><i class="fa-regular fa-bookmark"></i></div>
-          <span class="sb-text">Saved</span>
+          <span class="sb-badge">Soon</span>
         </div>
 
       </nav>
 
+      <!--
+        Footer: copyright line replaces Settings.
+        Year is injected dynamically by the inline script below so it
+        never needs manual updating.
+      -->
       <div class="sb-footer">
-        <div class="sb-item" data-tip="Settings" onclick="toast('Settings coming soon', 'info')">
-          <div class="sb-icon"><i class="fa-solid fa-sliders"></i></div>
-          <span class="sb-text">Settings</span>
+        <div class="sb-copyright">
+          <i class="fa-regular fa-copyright"></i>
+          <span id="copyright-year"></span> Hypnozio. All rights reserved.
         </div>
       </div>
-
     </div>
   </aside>
-
-
-  <!-- ═══════════════════════════════════════════════════════════════
-       MAIN CONTENT AREA
-       ═══════════════════════════════════════════════════════════════ -->
   <div id="main">
-
-    <!--
-      Topbar layout (left → right):
-        [hamburger]  [session icon]  [session title]  [search]  [globe]
-
-      When search is open, the input expands and the title shrinks/hides.
-      The globe button is always pinned to the right via margin-left:auto on .lang-wrap.
-    -->
     <header class="topbar">
-
-      <!-- Mobile hamburger — hidden on desktop -->
       <button class="mobile-btn" onclick="openMobile()" aria-label="Open navigation menu">
         <i class="fa-solid fa-bars-staggered"></i>
       </button>
-
-      <!-- Session icon — updated by render() -->
       <div class="tb-sess-icon" id="tb-icon" aria-hidden="true">
         <i class="fa-solid fa-fire-flame-curved"></i>
       </div>
-
-      <!-- Session title — updated by render(). Hides when search is open on small screens -->
       <div class="tb-title" id="tb-title">Weight Loss Session</div>
-
-      <!--
-        Search bar — icon button + expanding input.
-        #search-wrap   → outer container that expands via CSS class .open
-        #search-btn    → magnifying glass icon; becomes × when open
-        #search-input  → the actual text input, hidden until .open
-        Controlled entirely by toggleSearch(), expandSearch(), collapseSearch() in script.js.
-      -->
       <div class="search-wrap" id="search-wrap">
-        <button class="search-btn" id="search-btn"
-                onclick="toggleSearch(event)"
-                aria-label="Search programs">
+        <button class="search-btn" id="search-btn" onclick="toggleSearch(event)" aria-label="Search programs">
           <i class="fa-solid fa-magnifying-glass"></i>
         </button>
-        <input  class="search-input"
-                id="search-input"
-                type="text"
-                placeholder="Search programs…"
-                oninput="onSearchInput(event)"
-                onkeydown="onSearchKeydown(event)"
-                autocomplete="off"
-                aria-label="Search programs in current language" />
+        <input class="search-input" id="search-input" type="text" placeholder="Search programs…"
+               oninput="onSearchInput(event)" onkeydown="onSearchKeydown(event)"
+               autocomplete="off" aria-label="Search programs in current language" />
       </div>
-
-      <!-- Language switcher — always pinned right via margin-left:auto on .lang-wrap -->
       <div class="lang-wrap" id="lang-wrap">
-        <button class="lang-globe-btn" id="lang-globe-btn"
-                onclick="toggleLangPopover(event)"
-                aria-label="Change language"
-                aria-haspopup="listbox">
+        <button class="lang-globe-btn" id="lang-globe-btn" onclick="toggleLangPopover(event)"
+                aria-label="Change language" aria-haspopup="listbox">
           <i class="fa-solid fa-globe globe"></i>
           <span class="lang-code" id="lang-current-code">EN</span>
           <i class="fa-solid fa-chevron-down lang-caret" id="lang-caret"></i>
         </button>
-
         <div class="lang-popover" id="lang-popover" role="listbox">
           <span class="lang-popover-label">Select Language</span>
           <div id="lang-opts-container"></div>
         </div>
       </div>
-
     </header>
-
-
     <main class="content">
-
-      <!--
-        Action row:
-          Left  (act-left):  [● N selected] [Select All / Deselect All] [Clear]
-          Right (act-right): [Download Selected] [Download All]
-        Mobile: wraps into 2 rows, right group right-aligned.
-      -->
       <div class="act-row" role="toolbar" aria-label="Selection and download actions">
-
         <div class="act-left">
           <div class="sel-pill" id="sel-pill" aria-live="polite">
             <i class="fa-solid fa-circle-check"></i>
@@ -213,7 +106,6 @@
             <i class="fa-solid fa-xmark"></i> Clear
           </button>
         </div>
-
         <div class="act-right">
           <button class="btn btn-sage" id="dl-sel-btn" onclick="downloadSel()" disabled>
             <i class="fa-solid fa-download"></i> Download Selected
@@ -222,23 +114,20 @@
             <i class="fa-solid fa-folder-arrow-down"></i> Download All
           </button>
         </div>
-
       </div>
-
-      <!-- Card grid — populated by render() in script.js -->
       <div class="cards-grid" id="grid">
         <div id="loading-state" style="grid-column:1/-1;padding:48px 20px;text-align:center;color:var(--muted)">
           <i class="fa-solid fa-circle-notch fa-spin" style="font-size:24px;margin-bottom:14px;display:block;opacity:.5"></i>
           <span style="font-size:13px">Loading programs…</span>
         </div>
       </div>
-
     </main>
-
   </div>
-
-  <!-- Toast notification container -->
   <div id="toasts" aria-live="assertive" aria-atomic="true"></div>
+  <!-- Inject current year into copyright line dynamically -->
+  <script>
+    document.getElementById('copyright-year').textContent = new Date().getFullYear();
+  </script>
 
   <script src="script.js"></script>
 </body>
