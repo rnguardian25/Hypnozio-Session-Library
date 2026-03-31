@@ -1,6 +1,6 @@
 /**
  * =============================================================================
- * Hypnozio Session — style.css
+ * Hypnozio Session Library — style.css
  * =============================================================================
  *
  * TABLE OF CONTENTS:
@@ -9,13 +9,13 @@
  *   3.  Sidebar — shell, toggle tab, decorative glows
  *   4.  Sidebar — header (logo)
  *   5.  Sidebar — navigation items
- *   6.  Sidebar — footer
+ *   6.  Sidebar — footer + copyright
  *   7.  Main layout
  *   8.  Topbar
  *   9.  Search bar (topbar — expanding icon → input)
  *   10. Language switcher (globe button + popover)
  *   11. Content area
- *   12. Action row (selection + download buttons)
+ *   12. Action row — STICKY (sticks below topbar on scroll)
  *   13. Buttons
  *   14. Cards — grid layout
  *   15. Cards — states (hover, selected)
@@ -25,41 +25,57 @@
  *   19. Overlay (mobile backdrop)
  *   20. Toast notifications
  *   21. Responsive breakpoints
+ *
+ * DESIGN SYSTEM v2.4:
+ *   - Full teal/cyan rebrand to match Hypnozio app brand
+ *   - Font: Jost only — Cormorant Garamond removed entirely
+ *   - Sticky action row (sticks below topbar on scroll)
+ *   - Smaller card download button (12px, ~36px height)
+ *   - Checkbox hidden on hover — only visible when card is selected
  * =============================================================================
  */
 
 
 /* =============================================================================
    1. CSS CUSTOM PROPERTIES (DESIGN TOKENS)
+   Teal/cyan rebrand — matches Hypnozio app brand palette.
+   Background stays white/light for readability.
    ============================================================================= */
 :root {
   --sb-w:       272px;
   --sb-mini:     64px;
 
-  --bg:          #eef2ee;
-  --sidebar-bg:  #1a2a20;
-  --sidebar-bg2: #1f3025;
+  /* Backgrounds */
+  --bg:          #f0f8f8;          /* Very light teal-tinted page background */
+  --sidebar-bg:  #0a2535;          /* Deep teal-navy — matches app dark tone */
+  --sidebar-bg2: #0d2e40;          /* Slightly lighter for hover states */
   --surface:     #ffffff;
-  --surface2:    #f4f8f4;
+  --surface2:    #f0f8f8;
 
-  --border:    rgba(80, 120, 90, 0.14);
+  /* Borders */
+  --border:    rgba(0, 160, 180, 0.14);
   --border-dk: rgba(255, 255, 255, 0.08);
 
-  --sage:       #5f9070;
-  --sage-light: #82b494;
-  --sage-pale:  #d4e8da;
-  --sage-wash:  rgba(95, 144, 112, 0.10);
-  --sage-hover: rgba(95, 144, 112, 0.055);
+  /* Brand accent — teal/cyan */
+  --teal:        #00b4cc;          /* Primary cyan accent */
+  --teal-dark:   #0090a8;          /* Darker teal for hover/active */
+  --teal-light:  #4dd0e1;          /* Lighter teal for text on dark */
+  --teal-pale:   #e0f7fa;          /* Very pale teal for backgrounds/washes */
+  --teal-wash:   rgba(0, 180, 204, 0.10);  /* Card selected wash */
+  --teal-hover:  rgba(0, 180, 204, 0.055); /* Card hover wash */
 
-  --text-dark:  #182418;
-  --text:       #2a3c2e;
-  --muted:      #6e9078;
-  --muted-inv:  #7a9e82;
-  --text-inv:   #ddeee2;
+  /* Typography */
+  --text-dark:  #0a1f2e;
+  --text:       #1a3a4a;
+  --muted:      #4a8a9a;
+  --muted-inv:  #6ab8c8;
+  --text-inv:   #d8f0f5;
 
+  /* Shape */
   --radius:    16px;
   --radius-sm:  9px;
 
+  /* Animation */
   --ease: cubic-bezier(0.4, 0, 0.2, 1);
   --t:    0.22s;
 }
@@ -67,6 +83,7 @@
 
 /* =============================================================================
    2. RESET & BASE
+   Font: Jost only. Cormorant Garamond removed entirely.
    ============================================================================= */
 *,
 *::before,
@@ -84,12 +101,12 @@ body {
   overflow-x: hidden;
 }
 
-/* Subtle noise texture overlay */
+/* Subtle noise texture overlay for depth */
 body::after {
   content: '';
   position: fixed;
   inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.028'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.022'/%3E%3C/svg%3E");
   pointer-events: none;
   z-index: 0;
 }
@@ -97,6 +114,7 @@ body::after {
 
 /* =============================================================================
    3. SIDEBAR — SHELL, TOGGLE TAB, DECORATIVE GLOWS
+   Deep teal-navy to match Hypnozio app dark tone.
    ============================================================================= */
 #sidebar {
   position: fixed;
@@ -110,24 +128,29 @@ body::after {
   transition: width var(--t) var(--ease);
   overflow: visible;
 }
+
+/* Decorative teal glow — top right */
 #sidebar::before {
   content: '';
   position: absolute;
-  top: -90px; right: -80px;
-  width: 240px; height: 240px;
+  top: -80px; right: -60px;
+  width: 220px; height: 220px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(95, 144, 112, 0.16) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(0, 180, 204, 0.18) 0%, transparent 70%);
   pointer-events: none; z-index: 0;
 }
+
+/* Decorative cyan glow — bottom left */
 #sidebar::after {
   content: '';
   position: absolute;
   bottom: -60px; left: -50px;
   width: 180px; height: 180px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(61, 130, 120, 0.12) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(0, 144, 168, 0.14) 0%, transparent 70%);
   pointer-events: none; z-index: 0;
 }
+
 #sidebar.mini { width: var(--sb-mini); }
 
 .sb-inner {
@@ -149,7 +172,7 @@ body::after {
   display: flex; align-items: center; justify-content: center;
   cursor: pointer; z-index: 300;
   transition: background var(--t);
-  box-shadow: 3px 0 10px rgba(0, 0, 0, 0.18);
+  box-shadow: 3px 0 10px rgba(0, 0, 0, 0.2);
 }
 #sb-tab:hover { background: var(--sidebar-bg2); }
 #sb-tab i { font-size: 9px; color: var(--muted-inv); pointer-events: none; }
@@ -164,24 +187,27 @@ body::after {
   border-bottom: 1px solid var(--border-dk);
   flex-shrink: 0; min-height: 76px;
 }
+
 .logo-mark {
   width: 38px; height: 38px; flex-shrink: 0;
   display: flex; align-items: center; justify-content: center;
-  background: rgba(95, 144, 112, 0.18);
-  border: 1px solid rgba(130, 180, 148, 0.25);
+  background: rgba(0, 180, 204, 0.15);
+  border: 1px solid rgba(0, 180, 204, 0.28);
   border-radius: 11px;
 }
-.logo-mark svg { width: 22px; height: 22px; }
+.logo-mark img { width: 24px; height: 24px; object-fit: contain; display: block; }
+
 .logo-words {
   overflow: hidden;
   transition: opacity var(--t), max-width var(--t);
   max-width: 180px; white-space: nowrap;
-  display: flex; flex-direction: column; line-height: 1.15;
+  display: flex; flex-direction: column; line-height: 1.2;
 }
 #sidebar.mini .logo-words { opacity: 0; max-width: 0; }
+
 .logo-name {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 18px; font-weight: 600;
+  font-family: 'Jost', sans-serif;
+  font-size: 17px; font-weight: 600;
   color: var(--text-inv); letter-spacing: 0.02em;
 }
 .logo-tag {
@@ -200,12 +226,13 @@ body::after {
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 255, 255, 0.07) transparent;
 }
+
 .sb-label {
   font-size: 9px; font-weight: 600;
   letter-spacing: 0.2em; text-transform: uppercase;
   color: var(--muted-inv);
   padding: 8px 10px 5px;
-  opacity: 0.65; white-space: nowrap;
+  opacity: 0.6; white-space: nowrap;
   transition: opacity var(--t);
 }
 #sidebar.mini .sb-label { opacity: 0; }
@@ -221,15 +248,22 @@ body::after {
   letter-spacing: 0.01em;
 }
 .sb-item:hover  { background: rgba(255, 255, 255, 0.07); color: var(--text-inv); }
-.sb-item.active { background: rgba(95, 144, 112, 0.22); color: #c0ddc8; }
-.sb-item.active .sb-icon { color: var(--sage-light); }
+.sb-item.active { background: rgba(0, 180, 204, 0.18); color: #b2eaf2; }
+.sb-item.active .sb-icon { color: var(--teal-light); }
+
 .sb-icon  { width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; transition: color var(--t); }
 .sb-text  { flex: 1; overflow: hidden; transition: opacity var(--t), max-width var(--t); max-width: 160px; }
 #sidebar.mini .sb-text { opacity: 0; max-width: 0; }
-.sb-badge { background: rgba(95, 144, 112, 0.22); color: var(--sage-light); font-size: 10px; font-weight: 600; padding: 1px 8px; border-radius: 20px; flex-shrink: 0; }
+
+.sb-badge {
+  background: rgba(0, 180, 204, 0.2);
+  color: var(--teal-light);
+  font-size: 10px; font-weight: 600;
+  padding: 1px 8px; border-radius: 20px; flex-shrink: 0;
+}
 #sidebar.mini .sb-badge { display: none; }
 
-/* Tooltip shown in mini mode */
+/* Tooltip shown in icon-only (mini) mode */
 #sidebar.mini .sb-item::after {
   content: attr(data-tip);
   position: absolute; left: calc(var(--sb-mini) + 8px);
@@ -246,9 +280,15 @@ body::after {
 
 
 /* =============================================================================
-   6. SIDEBAR — FOOTER
+   6. SIDEBAR — FOOTER + COPYRIGHT
    ============================================================================= */
-/* Copyright line — replaces Settings in the footer */
+.sb-footer {
+  padding: 10px 8px 16px;
+  border-top: 1px solid var(--border-dk);
+  flex-shrink: 0;
+}
+
+/* Copyright line — replaces Settings item */
 .sb-copyright {
   display: flex;
   align-items: center;
@@ -258,13 +298,13 @@ body::after {
   font-size: 11px;
   font-weight: 400;
   letter-spacing: 0.02em;
-  opacity: 0.55;
+  opacity: 0.5;
   white-space: nowrap;
   overflow: hidden;
 }
 .sb-copyright i { font-size: 10px; flex-shrink: 0; }
 
-/* Hide copyright text when sidebar is collapsed to icon-only mode */
+/* Collapsed sidebar — centre the icon, hide the text */
 #sidebar.mini .sb-copyright { justify-content: center; }
 #sidebar.mini .sb-copyright span { display: none; }
 
@@ -284,12 +324,13 @@ body::after {
 
 /* =============================================================================
    8. TOPBAR
+   Light frosted glass — white/teal-tinted background.
    ============================================================================= */
 .topbar {
   position: sticky; top: 0;
-  background: rgba(238, 242, 238, 0.92);
-  backdrop-filter: blur(16px) saturate(1.6);
-  -webkit-backdrop-filter: blur(16px) saturate(1.6);
+  background: rgba(240, 248, 248, 0.94);
+  backdrop-filter: blur(18px) saturate(1.8);
+  -webkit-backdrop-filter: blur(18px) saturate(1.8);
   border-bottom: 1px solid var(--border);
   height: 62px; padding: 0 24px;
   display: flex; align-items: center; gap: 10px;
@@ -310,21 +351,21 @@ body::after {
 
 .tb-sess-icon {
   width: 30px; height: 30px;
-  background: var(--sage-pale); border-radius: 8px;
+  background: var(--teal-pale); border-radius: 8px;
   display: flex; align-items: center; justify-content: center;
-  color: var(--sage); font-size: 13px; flex-shrink: 0;
+  color: var(--teal-dark); font-size: 13px; flex-shrink: 0;
 }
 
 .tb-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 20px; font-weight: 600; color: var(--text-dark);
+  font-family: 'Jost', sans-serif;
+  font-size: 18px; font-weight: 600; color: var(--text-dark);
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   flex: 1; min-width: 0;
   margin-right: auto;
   transition: opacity var(--t), max-width var(--t);
 }
 
-/* On very small screens only — hide title when search is open to give input room */
+/* On very small screens — hide title when search is open */
 @media (max-width: 480px) {
   .topbar:has(.search-wrap.open) .tb-title {
     max-width: 0;
@@ -335,16 +376,10 @@ body::after {
 
 
 /* =============================================================================
-   9. SEARCH BAR (TOPBAR — EXPANDING ICON → INPUT)
-   Collapsed by default: only the icon button is visible.
-   On .open: the container expands to show the text input inline.
+   9. SEARCH BAR
    ============================================================================= */
-
 .search-wrap {
-  display: flex;
-  align-items: center;
-  gap: 0;
-  /* Collapsed — only wide enough for the icon button */
+  display: flex; align-items: center; gap: 0;
   width: 34px;
   overflow: hidden;
   transition: width var(--t) var(--ease), background var(--t), border-color var(--t);
@@ -352,50 +387,40 @@ body::after {
   border: 1px solid transparent;
   flex-shrink: 0;
 }
-
-/* Expanded state */
 .search-wrap.open {
   width: 220px;
   background: var(--surface);
-  border-color: var(--sage);
-  box-shadow: 0 0 0 3px var(--sage-pale);
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px var(--teal-pale);
 }
 
-/* Icon / × button */
 .search-btn {
-  width: 34px; height: 34px;
-  flex-shrink: 0;
+  width: 34px; height: 34px; flex-shrink: 0;
   background: none; border: none;
   color: var(--muted);
   display: flex; align-items: center; justify-content: center;
   font-size: 14px; cursor: pointer;
   border-radius: var(--radius-sm);
-  transition: color var(--t), background var(--t);
+  transition: color var(--t);
 }
-.search-btn:hover { color: var(--sage); }
-.search-wrap.open .search-btn { color: var(--sage); }
+.search-btn:hover { color: var(--teal); }
+.search-wrap.open .search-btn { color: var(--teal); }
 
-/* Text input — hidden (width 0) until wrap is open */
 .search-input {
-  flex: 1;
-  min-width: 0;
-  height: 34px;
-  border: none;
-  outline: none;
+  flex: 1; min-width: 0;
+  height: 34px; border: none; outline: none;
   background: transparent;
   font-family: 'Jost', sans-serif;
-  font-size: 13px;
-  color: var(--text-dark);
+  font-size: 13px; color: var(--text-dark);
   padding: 0 10px 0 2px;
-  opacity: 0;
-  transition: opacity var(--t);
+  opacity: 0; transition: opacity var(--t);
 }
 .search-wrap.open .search-input { opacity: 1; }
 .search-input::placeholder { color: var(--muted); font-size: 12.5px; }
 
 
 /* =============================================================================
-   10. LANGUAGE SWITCHER (GLOBE BUTTON + POPOVER)
+   10. LANGUAGE SWITCHER
    ============================================================================= */
 .lang-wrap { position: relative; flex-shrink: 0; }
 
@@ -408,8 +433,8 @@ body::after {
   cursor: pointer; transition: all var(--t); white-space: nowrap;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
 }
-.lang-globe-btn:hover { border-color: var(--sage); color: var(--sage); background: var(--sage-pale); }
-.lang-globe-btn.open  { border-color: var(--sage); color: var(--sage); background: var(--sage-pale); }
+.lang-globe-btn:hover { border-color: var(--teal); color: var(--teal); background: var(--teal-pale); }
+.lang-globe-btn.open  { border-color: var(--teal); color: var(--teal); background: var(--teal-pale); }
 .lang-globe-btn .globe     { font-size: 14px; }
 .lang-globe-btn .lang-code { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; }
 .lang-globe-btn .lang-caret { font-size: 9px; opacity: 0.55; transition: transform var(--t); }
@@ -420,7 +445,7 @@ body::after {
   top: calc(100% + 8px); right: 0;
   background: var(--surface); border: 1px solid var(--border);
   border-radius: var(--radius); padding: 8px; min-width: 170px;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.13);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.12);
   z-index: 500;
   animation: popIn 0.18s var(--ease) both;
 }
@@ -442,37 +467,52 @@ body::after {
   cursor: pointer; font-size: 13px; color: var(--text);
   transition: all var(--t); white-space: nowrap;
 }
-.lang-opt:hover  { background: var(--sage-pale); color: var(--sage); }
-.lang-opt.active { background: var(--sage-pale); color: var(--sage); font-weight: 600; }
+.lang-opt:hover  { background: var(--teal-pale); color: var(--teal-dark); }
+.lang-opt.active { background: var(--teal-pale); color: var(--teal-dark); font-weight: 600; }
 .lang-opt-code  { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; width: 26px; opacity: 0.65; flex-shrink: 0; }
 .lang-opt.active .lang-opt-code { opacity: 1; }
 .lang-opt-name  { flex: 1; }
-.lang-opt-check { font-size: 11px; color: var(--sage); opacity: 0; margin-left: auto; }
+.lang-opt-check { font-size: 11px; color: var(--teal); opacity: 0; margin-left: auto; }
 .lang-opt.active .lang-opt-check { opacity: 1; }
 
 
 /* =============================================================================
    11. CONTENT AREA
    ============================================================================= */
-.content { padding: 22px 26px; flex: 1; }
+.content { padding: 0 26px 26px; flex: 1; }
 
 
 /* =============================================================================
-   12. ACTION ROW
+   12. ACTION ROW — STICKY
+   Sticks just below the topbar (top: 62px = topbar height) when scrolling.
+   The white/teal frosted background matches the topbar so it feels like a
+   continuous top bar. z-index: 90 keeps it below the topbar (z:100) but
+   above cards and content (z:1).
    ============================================================================= */
 .act-row {
+  position: sticky;
+  top: 62px;           /* = topbar height */
+  z-index: 90;
+  background: rgba(240, 248, 248, 0.96);
+  backdrop-filter: blur(16px) saturate(1.6);
+  -webkit-backdrop-filter: blur(16px) saturate(1.6);
+  border-bottom: 1px solid var(--border);
   display: flex; align-items: center;
-  gap: 8px; margin-bottom: 22px; flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px 0 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
 }
+
 .act-left  { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; }
 .act-right { display: flex; align-items: center; gap: 7px; margin-left: auto; }
 
 .sel-pill {
   display: none; align-items: center; gap: 5px;
-  background: var(--sage-pale); color: var(--sage);
+  background: var(--teal-pale); color: var(--teal-dark);
   font-size: 12px; font-weight: 600;
-  padding: 7px 12px; border-radius: var(--radius-sm);
-  border: 1px solid rgba(95, 144, 112, 0.28); white-space: nowrap;
+  padding: 6px 12px; border-radius: var(--radius-sm);
+  border: 1px solid rgba(0, 180, 204, 0.28); white-space: nowrap;
 }
 .sel-pill.show { display: flex; }
 .sel-pill i { font-size: 11px; }
@@ -489,13 +529,27 @@ body::after {
   white-space: nowrap; text-decoration: none; letter-spacing: 0.02em;
 }
 .btn i { font-size: 11px; }
-.btn-dark  { background: var(--sidebar-bg); color: #bcd8c4; }
-.btn-dark:hover  { background: #1f3025; transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,0,0,.18); }
-.btn-sage  { background: var(--sage-pale); color: var(--sage); border: 1px solid rgba(95,144,112,.25); }
-.btn-sage:hover  { background: #c2deca; border-color: rgba(95,144,112,.5); }
+
+/* Dark — primary action (Download All) */
+.btn-dark { background: var(--sidebar-bg); color: #a8dce8; }
+.btn-dark:hover { background: var(--sidebar-bg2); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,0,0,.2); }
+
+/* Teal — secondary action (Download Selected) */
+.btn-teal {
+  background: var(--teal-pale); color: var(--teal-dark);
+  border: 1px solid rgba(0, 180, 204, 0.3);
+}
+.btn-teal:hover { background: #b2eaf2; border-color: var(--teal); }
+
+/* Keep btn-sage as alias so existing JS references still work */
+.btn-sage { background: var(--teal-pale); color: var(--teal-dark); border: 1px solid rgba(0,180,204,.3); }
+.btn-sage:hover { background: #b2eaf2; border-color: var(--teal); }
+
+/* Outline */
 .btn-outline { background: var(--surface); color: var(--muted); border: 1px solid var(--border); }
-.btn-outline:hover { border-color: var(--sage); color: var(--sage); background: var(--sage-pale); }
-.btn:disabled { opacity: .38; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
+.btn-outline:hover { border-color: var(--teal); color: var(--teal-dark); background: var(--teal-pale); }
+
+.btn:disabled { opacity: .35; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
 
 
 /* =============================================================================
@@ -524,50 +578,56 @@ body::after {
   display: flex; flex-direction: column; flex: 1;
 }
 @keyframes cardIn {
-  from { opacity: 0; transform: translateY(14px); }
+  from { opacity: 0; transform: translateY(12px); }
   to   { opacity: 1; transform: none; }
 }
-.card:nth-child(1){animation-delay:.04s} .card:nth-child(2){animation-delay:.09s}
-.card:nth-child(3){animation-delay:.13s} .card:nth-child(4){animation-delay:.17s}
-.card:nth-child(5){animation-delay:.21s}
+.card:nth-child(1){animation-delay:.04s} .card:nth-child(2){animation-delay:.08s}
+.card:nth-child(3){animation-delay:.12s} .card:nth-child(4){animation-delay:.16s}
+.card:nth-child(5){animation-delay:.20s}
 
 
 /* =============================================================================
    15. CARDS — STATES (HOVER, SELECTED)
-   Google Drive style: background wash, no lift/transform, no border ring.
    ============================================================================= */
 .card:hover {
-  background: var(--sage-hover);
-  border-color: rgba(95, 144, 112, 0.28);
+  background: var(--teal-hover);
+  border-color: rgba(0, 180, 204, 0.28);
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
 }
 .card.selected {
-  background: var(--sage-wash);
-  border-color: rgba(95, 144, 112, 0.35);
-  box-shadow: 0 2px 12px rgba(95, 144, 112, 0.10);
+  background: var(--teal-wash);
+  border-color: rgba(0, 180, 204, 0.38);
+  box-shadow: 0 2px 14px rgba(0, 180, 204, 0.12);
 }
-.card.selected:hover { background: rgba(95, 144, 112, 0.14); }
+.card.selected:hover { background: rgba(0, 180, 204, 0.14); }
 
 
 /* =============================================================================
    16. CARDS — INTERACTIVE ELEMENTS (CHECKBOX, INFO BUTTON, INFO POPUP)
+
+   CHECKBOX BEHAVIOUR (v2.4):
+   - Hidden at rest AND on hover — only appears when card is selected.
+   - This removes the distraction of the checkbox appearing on every hover.
+   - The card background wash on hover still signals interactivity.
    ============================================================================= */
 
-/* Circular checkbox — top-left, fades in on hover, stays on selected */
+/* Circular checkbox — top-left */
 .card-cb {
   position: absolute; top: 10px; left: 10px;
   width: 22px; height: 22px; border-radius: 50%;
-  background: rgba(255, 255, 255, 0.94);
-  border: 1.5px solid rgba(95, 144, 112, 0.35);
+  background: var(--teal);
+  border: 1.5px solid var(--teal);
   display: flex; align-items: center; justify-content: center;
   z-index: 5; transition: all var(--t);
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 1px 6px rgba(0,0,0,.18);
+  /* Hidden by default AND on hover — only shows when selected */
   opacity: 0;
+  pointer-events: none;
 }
-.card:hover .card-cb,
-.card.selected .card-cb { opacity: 1; }
-.card.selected .card-cb { background: var(--sage); border-color: var(--sage); color: #fff; }
-.card-cb i { font-size: 9px; opacity: 0; transition: opacity var(--t); }
+/* Only show when card is selected — NOT on hover */
+.card.selected .card-cb { opacity: 1; pointer-events: auto; }
+
+.card-cb i { font-size: 9px; color: #fff; opacity: 0; transition: opacity var(--t); }
 .card.selected .card-cb i { opacity: 1; }
 
 /* Info button — top-right, fades in on hover */
@@ -575,7 +635,7 @@ body::after {
   position: absolute; top: 10px; right: 10px;
   width: 22px; height: 22px; border-radius: 50%;
   background: rgba(255, 255, 255, 0.88);
-  border: 1.5px solid rgba(95, 144, 112, 0.20);
+  border: 1.5px solid rgba(0, 180, 204, 0.22);
   display: flex; align-items: center; justify-content: center;
   z-index: 5; cursor: pointer; transition: all var(--t);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.10);
@@ -583,7 +643,7 @@ body::after {
 }
 .card:hover .card-info-btn,
 .card.selected .card-info-btn { opacity: 1; }
-.card-info-btn:hover { background: var(--sage-pale); border-color: var(--sage); transform: scale(1.1); }
+.card-info-btn:hover { background: var(--teal-pale); border-color: var(--teal); transform: scale(1.1); }
 .card-info-btn i { font-size: 9px; color: var(--muted); pointer-events: none; }
 
 /* Info popup */
@@ -592,24 +652,25 @@ body::after {
   top: 38px; right: 0;
   background: var(--surface); border: 1px solid var(--border);
   border-radius: 12px; padding: 14px 16px; width: 230px;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.13);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
   z-index: 50;
   animation: popIn 0.18s var(--ease) both;
   pointer-events: none;
 }
 .card-info-popup.open { display: block; pointer-events: auto; }
+
 .card-info-popup-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 16px; font-weight: 600; color: var(--text-dark);
-  line-height: 1.4; margin-bottom: 10px;
+  font-family: 'Jost', sans-serif;
+  font-size: 14px; font-weight: 600; color: var(--text-dark);
+  line-height: 1.45; margin-bottom: 10px;
   padding-bottom: 10px; border-bottom: 1px solid var(--border);
 }
 .card-info-popup-row {
   display: flex; align-items: center; gap: 9px;
-  font-size: 13px; color: var(--muted); margin-bottom: 6px; font-weight: 400;
+  font-size: 12.5px; color: var(--muted); margin-bottom: 6px; font-weight: 400;
 }
 .card-info-popup-row:last-child { margin-bottom: 0; }
-.card-info-popup-row i   { font-size: 11px; width: 14px; color: var(--sage); flex-shrink: 0; }
+.card-info-popup-row i   { font-size: 11px; width: 14px; color: var(--teal); flex-shrink: 0; }
 .card-info-popup-row span { color: var(--text); }
 
 
@@ -620,32 +681,34 @@ body::after {
 .card-thumb-bg { position: absolute; inset: 0; transition: transform 0.6s ease; }
 .card:hover .card-thumb-bg { transform: scale(1.03); }
 
-/* CSS gradient fallbacks */
-.g0 { background: linear-gradient(145deg, #cce0d4 0%, #98c0aa 45%, #5f9070 100%); }
-.g1 { background: linear-gradient(145deg, #c2d8de 0%, #88b8c8 45%, #3d8290 100%); }
-.g2 { background: linear-gradient(145deg, #cfdec8 0%, #a8c09a 45%, #72966a 100%); }
-.g3 { background: linear-gradient(145deg, #dcd8c4 0%, #c0b890 45%, #8a7a58 100%); }
-.g4 { background: linear-gradient(145deg, #ccd8dc 0%, #9ab8c0 45%, #5a8890 100%); }
+/* CSS gradient fallbacks — teal/cyan tones to match brand */
+.g0 { background: linear-gradient(145deg, #b2eaf2 0%, #4dd0e1 45%, #00acc1 100%); }
+.g1 { background: linear-gradient(145deg, #b2dfdb 0%, #4db6ac 45%, #00897b 100%); }
+.g2 { background: linear-gradient(145deg, #b3e5fc 0%, #4fc3f7 45%, #0288d1 100%); }
+.g3 { background: linear-gradient(145deg, #c8e6c9 0%, #66bb6a 45%, #2e7d32 100%); }
+.g4 { background: linear-gradient(145deg, #cfd8dc 0%, #90a4ae 45%, #455a64 100%); }
 
 .card-thumb-shimmer {
   position: absolute; inset: 0;
   background:
-    radial-gradient(circle at 28% 28%, rgba(255,255,255,.28) 0%, transparent 55%),
+    radial-gradient(circle at 28% 28%, rgba(255,255,255,.30) 0%, transparent 55%),
     radial-gradient(circle at 72% 72%, rgba(255,255,255,.12) 0%, transparent 40%);
 }
 .card-thumb-ico {
   position: absolute; inset: 0;
   display: flex; align-items: center; justify-content: center;
-  font-size: 32px; color: rgba(255,255,255,.38);
+  font-size: 32px; color: rgba(255,255,255,.40);
 }
 .card-thumb-shade {
   position: absolute; inset: 0;
-  background: linear-gradient(0deg, rgba(15,28,18,.5) 0%, transparent 60%);
+  background: linear-gradient(0deg, rgba(10,31,46,.52) 0%, transparent 58%);
 }
+
+/* Duration pill — bottom-left of thumbnail */
 .card-dur-tag {
   position: absolute; bottom: 9px; left: 9px;
-  background: rgba(15,28,18,.72); color: rgba(255,255,255,.95);
-  font-size: 11px; font-weight: 600;
+  background: rgba(10,31,46,.72); color: rgba(255,255,255,.95);
+  font-size: 11px; font-weight: 500;
   padding: 3px 9px; border-radius: 20px;
   display: flex; align-items: center; gap: 5px;
   letter-spacing: 0.01em;
@@ -656,36 +719,41 @@ body::after {
 
 /* =============================================================================
    18. CARDS — BODY (TITLE + DOWNLOAD BUTTON)
-   Large text and prominent tap target for 30-70 age group accessibility.
+
+   DOWNLOAD BUTTON (v2.4):
+   - Slightly smaller: 12px font, ~36px height (padding: 8px 14px)
+   - Still full-width for easy tapping
+   - Accessible tap target maintained (>= 36px height)
    ============================================================================= */
 .card-body {
-  padding: 16px 16px 18px;
+  padding: 12px 14px 14px;
   display: flex; flex-direction: column; flex: 1;
 }
 
-/* 2-line clamp — full title visible in the info popup */
+/* Title — Jost replaces Cormorant Garamond */
 .card-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 17px; font-weight: 600; line-height: 1.4; color: var(--text-dark);
+  font-family: 'Jost', sans-serif;
+  font-size: 14px; font-weight: 600; line-height: 1.45; color: var(--text-dark);
   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
   overflow: hidden; text-overflow: ellipsis;
-  margin-bottom: 14px; letter-spacing: 0.01em;
+  margin-bottom: 10px; letter-spacing: 0.01em;
 }
 
-/* Full-width download button — min ~44px height for comfortable tapping */
+/* Download button — slightly smaller (v2.4: 12px font, 8px 14px padding) */
 .card-dl {
-  display: flex; align-items: center; justify-content: center; gap: 8px;
-  width: 100%; padding: 11px 16px; border-radius: 10px;
-  background: var(--sidebar-bg); color: #c8e0cc;
+  display: flex; align-items: center; justify-content: center; gap: 7px;
+  width: 100%; padding: 8px 14px; border-radius: 8px;
+  background: var(--sidebar-bg); color: #a8dce8;
   border: none; cursor: pointer;
-  font-family: 'Jost', sans-serif; font-size: 14px; font-weight: 500;
+  font-family: 'Jost', sans-serif;
+  font-size: 12px; font-weight: 500;
   text-decoration: none; letter-spacing: 0.02em;
   transition: all var(--t);
   margin-top: auto;
 }
-.card-dl i { font-size: 13px; }
-.card-dl:hover { background: #243c2a; color: #e0f0e4; box-shadow: 0 4px 14px rgba(0,0,0,.16); }
-.card.selected .card-dl { background: #1a3524; }
+.card-dl i { font-size: 11px; }
+.card-dl:hover { background: var(--sidebar-bg2); color: #d8f4f8; box-shadow: 0 3px 12px rgba(0,0,0,.15); }
+.card.selected .card-dl { background: #0d3547; }
 
 
 /* =============================================================================
@@ -693,7 +761,7 @@ body::after {
    ============================================================================= */
 #overlay {
   display: none; position: fixed; inset: 0;
-  background: rgba(15, 28, 18, 0.5); z-index: 150;
+  background: rgba(10, 31, 46, 0.55); z-index: 150;
   backdrop-filter: blur(3px);
 }
 #overlay.show { display: block; }
@@ -711,10 +779,10 @@ body::after {
   background: var(--surface); border: 1px solid var(--border); color: var(--text);
   padding: 11px 16px; border-radius: var(--radius-sm);
   font-size: 13px; display: flex; align-items: center; gap: 10px;
-  box-shadow: 0 8px 24px rgba(0,0,0,.1);
+  box-shadow: 0 8px 24px rgba(0,0,0,.10);
   animation: tIn 0.28s var(--ease) both; max-width: 300px;
 }
-.toast-ic { color: var(--sage); font-size: 14px; }
+.toast-ic { color: var(--teal); font-size: 14px; }
 @keyframes tIn  { from { transform: translateX(26px); opacity: 0; } }
 @keyframes tOut { to   { transform: translateX(26px); opacity: 0; } }
 
@@ -737,24 +805,29 @@ body::after {
   #main { margin-left: 0 !important; }
   .mobile-btn { display: flex; }
   .topbar { padding: 0 14px; gap: 8px; }
-  .tb-title { font-size: 16px; }
-  .content { padding: 14px; }
+  .tb-title { font-size: 15px; }
+  .content { padding: 0 14px 14px; }
   .cards-grid { grid-template-columns: repeat(auto-fill, minmax(165px, 1fr)); gap: 12px; }
-  .act-row  { flex-direction: column; align-items: stretch; gap: 8px; }
+
+  /* Sticky toolbar on mobile — adjust top to match mobile topbar height */
+  .act-row {
+    top: 62px;
+    padding: 8px 0;
+    margin-bottom: 16px;
+    flex-direction: column; align-items: stretch; gap: 8px;
+  }
   .act-left { width: 100%; flex-wrap: wrap; }
   .act-right { width: 100%; margin-left: 0; justify-content: flex-end; }
-  .btn { padding: 9px 14px; font-size: 12.5px; }
-  /* Search bar expands to fill available space on mobile */
+  .btn { padding: 8px 13px; font-size: 12px; }
   .search-wrap.open { width: 160px; }
 }
 
 /* ── Mobile (≤520px) ── */
 @media (max-width: 520px) {
   .cards-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
-  .tb-title { font-size: 14px; }
+  .tb-title { font-size: 13px; }
   .act-right .btn { flex: 1; justify-content: center; }
-  .card-title { font-size: 15px; }
-  .card-dl { font-size: 13px; padding: 10px 12px; }
-  /* On very small screens, search takes all available topbar space when open */
+  .card-title { font-size: 13px; }
+  .card-dl { font-size: 11px; padding: 7px 10px; }
   .search-wrap.open { width: 140px; }
 }

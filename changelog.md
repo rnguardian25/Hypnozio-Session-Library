@@ -76,7 +76,11 @@ GitHub Pages serves over HTTP, so it works fine in production.
 | Full developer documentation (JSDoc + inline comments) | ✅ Done |
 | Separated into index.html / style.css / script.js / data.json | ✅ Done |
 | GitHub Pages — live and deployed | ✅ Done |
-| Real Hypnozio logo (lh3 image URL) | ✅ Done |
+| Full teal/cyan rebrand — sidebar, accents, buttons, card washes | ✅ Done |
+| Font changed to Jost only — Cormorant Garamond removed | ✅ Done |
+| Action row (toolbar) sticky below topbar on scroll | ✅ Done |
+| Card download button smaller (12px font, ~36px height) | ✅ Done |
+| Checkbox hidden on hover — only visible when card is selected | ✅ Done |
 | Branding updated to "Hypnozio" / "Programs Library" | ✅ Done |
 | Firebase authentication (Option B — subscription gating) | ⏳ Planned |
 | Deep Relaxation + Focus & Energy real content | ⏳ Pending |
@@ -85,7 +89,25 @@ GitHub Pages serves over HTTP, so it works fine in production.
 
 ## Changelog
 
-### v2.4 — `feat/sidebar-cleanup-and-copyright` *(current)*
+### v2.5 — `feat/rebrand-and-ux-polish` *(current)*
+**Commit message:** `feat: teal rebrand, Jost font, sticky toolbar, smaller download btn, checkbox on select only`
+
+Changes:
+- ✅ **Full teal/cyan rebrand** (`style.css`) — all CSS custom properties updated to match Hypnozio app brand palette:
+  - Sidebar: `#0a2535` deep teal-navy (was dark green `#1a2a20`)
+  - Primary accent: `--teal: #00b4cc` cyan (was `--sage: #5f9070`)
+  - Page background: `#f0f8f8` light teal tint (was `#eef2ee` green tint)
+  - Card washes, button colours, search focus ring, lang popover — all shifted to teal/cyan
+  - Gradient fallbacks on thumbnail cards updated to teal/cyan/blue palette
+- ✅ **Font: Jost only** — `font-family: 'Cormorant Garamond'` removed from every CSS rule; all titles, popups, and labels now use `'Jost', sans-serif`; Google Fonts request for Cormorant can be removed from `index.html` `<head>`
+- ✅ **Sticky action row** — `.act-row` now has `position: sticky; top: 62px; z-index: 90` with frosted glass background matching the topbar; sticks just below the topbar as user scrolls through 45+ cards; works correctly on mobile too
+- ✅ **Smaller download button** — `.card-dl` reduced from `14px font / 11px 16px padding` to `12px font / 8px 14px padding` (~36px height); full-width maintained; accessible tap target preserved
+- ✅ **Checkbox hidden on hover** — `.card-cb` opacity removed from `.card:hover .card-cb` selector; checkbox now only visible (`opacity: 1`) when `.card.selected` — hover no longer triggers it; card background wash still signals interactivity on hover
+- ✅ **`btn-sage` preserved as alias** — existing JS references to `.btn-sage` still work; class now maps to teal styling
+
+---
+
+### v2.4 — `feat/sidebar-cleanup-and-copyright`
 **Commit message:** `feat: coming soon sessions, remove library nav, add copyright footer`
 
 Changes:
@@ -325,8 +347,9 @@ git push
 
 ## Pending / Next Steps
 
-- [ ] Push all changes to GitHub (`index.html`, `style.css`, `data.json`, `CHANGELOG.md`)
-- [ ] Fill in real programs for Deep Relaxation and Focus & Energy sessions (when ready)
+- [ ] Remove Cormorant Garamond from Google Fonts `<link>` in `index.html` `<head>` (font no longer used)
+- [ ] Push all changes to GitHub (`style.css`, `index.html`, `CHANGELOG.md`)
+- [ ] Fill in real programs for Deep Relaxation and Focus & Energy (when ready)
 - [ ] Implement Firebase authentication (Option B — subscription gating)
 - [ ] Add custom domain (e.g. `library.hypnozio.com`)
-- [ ] Verify all 17 language downloads work on live site
+- [ ] Verify all 17 language downloads on live site
